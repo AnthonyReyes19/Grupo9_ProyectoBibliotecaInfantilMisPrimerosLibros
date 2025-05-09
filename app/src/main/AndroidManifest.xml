@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Grupo9_ProyectoBibliotecaInfantilMisPrimerosLibros"
         tools:targetApi="31">
         <activity
+            android:name=".loginPrincipalModuloReyes"
+            android:exported="false" />
+        <activity
+            android:name=".consultarUsuario"
+            android:exported="false" />
+        <activity
             android:name=".formularioCuento"
             android:exported="false" />
         <activity

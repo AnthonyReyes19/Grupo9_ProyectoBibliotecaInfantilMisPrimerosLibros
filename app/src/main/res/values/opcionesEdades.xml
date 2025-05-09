@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="edad">
+        <item>Seleccione...</item>
+        <item>1-3 años</item>
+        <item>4-6 años</item>
+        <item>7-9 años</item>
+    </string-array>
+</resources>

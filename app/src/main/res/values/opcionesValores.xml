@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="valores">
+        <item>Seleccione...</item>
+        <item>Amistad</item>
+        <item>Honestidad</item>
+        <item>Respeto</item>
+        <item>Empatía</item>
+        <item>Solidaridad</item>
+        <item>Perseverancia</item>
+    </string-array>
+</resources>

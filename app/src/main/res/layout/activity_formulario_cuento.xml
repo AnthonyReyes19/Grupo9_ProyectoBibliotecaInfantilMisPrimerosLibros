@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout7"
-        android:layout_width="401dp"
-        android:layout_height="293dp"
+        android:layout_width="399dp"
+        android:layout_height="245dp"
         android:layout_marginTop="36dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,15 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/reg_txtcedula"
-            android:layout_width="382dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Id"
-            android:inputType="number" />
-
-        <EditText
-            android:id="@+id/reg_txtnombres"
+            android:id="@+id/reg_txtTitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -34,11 +26,11 @@
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/reg_txtapellidos"
+            android:id="@+id/reg_txtAutor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Descripcion Corta"
+            android:hint="Autor"
             android:inputType="text" />
 
         <LinearLayout
@@ -59,7 +51,7 @@
                     android:textSize="20sp" />
 
                 <Spinner
-                    android:id="@+id/reg_contNacionalidades"
+                    android:id="@+id/reg_contEnsenar"
                     android:layout_width="199dp"
                     android:layout_height="27dp" />
 
@@ -80,7 +72,7 @@
                 android:textSize="20sp" />
 
             <Spinner
-                android:id="@+id/reg_contGeneros"
+                android:id="@+id/reg_contEdad"
                 android:layout_width="201dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -129,7 +121,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="#FF5722"
-                    android:onClick="regresar"
                     android:text="Borrar" />
 
             </LinearLayout>
@@ -154,14 +145,27 @@
         app:title="Registro de Cuentos" />
 
     <Button
-        android:id="@+id/reg_btnCancelar2"
+        android:id="@+id/reg_btnCancelar"
         android:layout_width="164dp"
         android:layout_height="47dp"
-        android:layout_marginTop="312dp"
+        android:layout_marginTop="260dp"
         android:layout_weight="1"
+        android:onClick="regresar"
         android:text="Volver"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnConsultar"
+        android:layout_width="130dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="260dp"
+        android:onClick="consultarDatos"
+        android:text="Consultar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.879"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
