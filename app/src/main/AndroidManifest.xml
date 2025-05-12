@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Grupo9_ProyectoBibliotecaInfantilMisPrimerosLibros"
         tools:targetApi="31">
         <activity
+            android:name=".activity_registro_perfil_infantil"
+            android:exported="false" />
+        <activity
             android:name=".loginPrincipalModuloReyes"
             android:exported="false" />
         <activity
