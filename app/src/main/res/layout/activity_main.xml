@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.5">
 
         <EditText
-            android:id="@+id/loginP_txtusuario"
+            android:id="@+id/login_txtusuario"
             android:layout_width="372dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -32,7 +32,7 @@
             android:text="Usuario" />
 
         <EditText
-            android:id="@+id/loginP_txtclave"
+            android:id="@+id/login_txtclave"
             android:layout_width="372dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -60,12 +60,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/loginP_btnIngresar"
+            android:id="@+id/login_btnIngresar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#03A9F4"
-            android:onClick="ventanaPrueba"
+            android:onClick="ingresarSistema"
             android:paddingRight="20dp"
             android:text="Ingresar" />
 

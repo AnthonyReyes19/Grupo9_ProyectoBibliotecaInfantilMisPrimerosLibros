@@ -18,6 +18,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText usuarioTexto, contrasenaTexto;
+    Button botonIniciar, botonRegistrar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,28 +34,38 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
 
-
         });
+        usuarioTexto = findViewById(R.id.login_txtusuario);
+        contrasenaTexto = findViewById(R.id.login_txtclave);
+        botonIniciar = findViewById(R.id.login_btnIngresar);
+        //botonRegistrar = findViewById(R.id.btnCrearCuenta);
     }
 
     public void ingresarSistema(View v){
-        EditText txt_usuario = findViewById(R.id.loginP_txtusuario);
-        EditText txt_clave = findViewById(R.id.loginP_txtclave);
-        Button btn_ingresar = findViewById(R.id.loginP_btnIngresar);
+        String usuario = usuarioTexto.getText().toString();
+        String contrasena = contrasenaTexto.getText().toString();
 
-        Toast.makeText(v.getContext(),"Ha presionado el boton ingresar", Toast.LENGTH_LONG).show();
+        if (usuario.equals("admin") && contrasena.equals("grupo9")) {
+            Toast.makeText(MainActivity.this, "Acceso Concedido", Toast.LENGTH_SHORT).show();
+            Intent ventanaPrueba = new Intent(this, loginPrincipalModuloReyes.class);
+            startActivity(ventanaPrueba);
+        } else {
+            Toast.makeText(MainActivity.this, "Datos incorrectos", Toast.LENGTH_SHORT).show();
+        }
 
         CheckBox recordar = findViewById(R.id.login_chkrecordar);
 
         if(recordar.isChecked()){
-            guardarCredenciales(txt_usuario.getText().toString(), txt_clave.getText().toString());
-
+            guardarCredenciales(usuarioTexto.getText().toString(), contrasenaTexto.getText().toString());
         }
 
-        Intent ventanaPrincipal = new Intent( this, MainActivity.class);
-        ventanaPrincipal.putExtra("user", txt_usuario.getText().toString());
-        startActivity(ventanaPrincipal);
+
     }
+
+   // public void crearCuenta(View v) {
+   //     Intent ventanaRegistrarse = new Intent(this, CrearCuenta.class);
+    //    startActivity(ventanaRegistrarse);
+    // }
 
     private void guardarCredenciales(String usuario, String clave){
         SharedPreferences splogin = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
@@ -70,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         String usuario = splogin.getString("spUsuario", "");
         String clave = splogin.getString("spClave", "");
 
-        EditText txtuser = findViewById(R.id.loginP_txtusuario);
-        EditText txtclave = findViewById(R.id.loginP_txtclave);
+        EditText txtuser = findViewById(R.id.login_txtusuario);
+        EditText txtclave = findViewById(R.id.login_txtclave);
 
         txtuser.setText(usuario);
         txtclave.setText(clave);

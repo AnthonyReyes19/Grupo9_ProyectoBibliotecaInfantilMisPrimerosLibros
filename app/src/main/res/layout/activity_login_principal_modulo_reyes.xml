@@ -32,8 +32,8 @@
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            android:layout_height="145dp"
+            app:srcCompat="@mipmap/dibujoicon_foreground" />
 
         <Button
             android:id="@+id/btnDibujo"
@@ -45,20 +45,20 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="143dp"
-        android:layout_height="234dp"
-        android:layout_marginTop="112dp"
+        android:layout_width="167dp"
+        android:layout_height="265dp"
+        android:layout_marginTop="84dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintHorizontal_bias="0.864"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/imageButton2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            android:layout_height="160dp"
+            app:srcCompat="@mipmap/juegosicon" />
 
         <Button
             android:id="@+id/btnJuegos"
@@ -75,20 +75,20 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="144dp"
-        android:layout_height="228dp"
-        android:layout_marginTop="112dp"
+        android:layout_width="172dp"
+        android:layout_height="267dp"
+        android:layout_marginTop="84dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.179"
+        app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/imageButton3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            android:layout_height="157dp"
+            app:srcCompat="@mipmap/juegoss" />
 
         <Button
             android:id="@+id/btnCuento"
