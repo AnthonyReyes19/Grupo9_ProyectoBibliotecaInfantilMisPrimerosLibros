@@ -1,4 +1,4 @@
-package ModuloActividadesyJuegos;
+package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.MainActivity;
-import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
 public class loginPrincipalModuloReyes extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package ModuloActividadesyJuegos;
+package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -19,11 +19,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+
+import ModuloActividadesyJuegos.BDOpenHelper;
 
 public class formularioCuento extends AppCompatActivity {
 

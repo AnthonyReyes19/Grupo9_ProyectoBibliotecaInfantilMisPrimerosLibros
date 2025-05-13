@@ -16,8 +16,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import ModuloActividadesyJuegos.loginPrincipalModuloReyes;
-
 public class MainActivity extends AppCompatActivity {
 
     EditText usuarioTexto, contrasenaTexto;
