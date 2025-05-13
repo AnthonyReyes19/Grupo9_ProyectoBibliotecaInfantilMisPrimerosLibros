@@ -1,4 +1,4 @@
-package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros;
+package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -17,7 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import ModuloActividadesyJuegos.BDOpenHelper;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
 public class consultarUsuario extends AppCompatActivity {
 

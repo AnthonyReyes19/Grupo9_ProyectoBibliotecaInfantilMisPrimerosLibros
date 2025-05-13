@@ -1,4 +1,4 @@
-package ModuloActividadesyJuegos;
+package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos;
 
 public class Cuento {
     private int id;

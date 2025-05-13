@@ -16,22 +16,22 @@
             android:name=".detalleCuento"
             android:exported="false" />
         <activity
-            android:name="ModuloActividadesyJuegos.VerCuento"
+            android:name=".ModuloActividadesyJuegos.VerCuento"
             android:exported="false" />
         <activity
-            android:name=".loginPrincipalModuloReyes"
+            android:name=".ModuloActividadesyJuegos.loginPrincipalModuloReyes"
             android:exported="false" />
         <activity
-            android:name=".consultarUsuario"
+            android:name=".ModuloActividadesyJuegos.consultarUsuario"
             android:exported="false" />
         <activity
-            android:name=".formularioCuento"
+            android:name=".ModuloActividadesyJuegos.formularioCuento"
             android:exported="false" />
         <activity
-            android:name="ModuloActividadesyJuegos.verCuentoUnoPaginauno"
+            android:name=".ModuloActividadesyJuegos.verCuentoUnoPaginauno"
             android:exported="false"/>
         <activity
-            android:name="ModuloActividadesyJuegos.verCuentoUnoPaginados"
+            android:name=".ModuloActividadesyJuegos.verCuentoUnoPaginados"
             android:exported="false"/>
         <activity
             android:name=".MainActivity"

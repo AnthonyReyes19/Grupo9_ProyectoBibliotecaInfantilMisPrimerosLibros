@@ -1,4 +1,4 @@
-package ModuloActividadesyJuegos;
+package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos;
 
 import android.content.Context;
 import android.content.Intent;

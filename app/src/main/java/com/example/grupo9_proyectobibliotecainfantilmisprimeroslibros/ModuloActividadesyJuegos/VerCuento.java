@@ -1,4 +1,4 @@
-package ModuloActividadesyJuegos;
+package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
