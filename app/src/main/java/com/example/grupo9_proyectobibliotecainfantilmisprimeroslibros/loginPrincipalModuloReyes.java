@@ -10,6 +10,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import ModuloActividadesyJuegos.VerCuento;
+
 public class loginPrincipalModuloReyes extends AppCompatActivity {
 
     @Override
@@ -28,6 +30,11 @@ public class loginPrincipalModuloReyes extends AppCompatActivity {
         Intent ventanaRegistrarCuento = new Intent(this, formularioCuento.class);
         startActivity(ventanaRegistrarCuento);
     }
+    public void verCuento(View v){
+        Intent intent = new Intent(this, VerCuento.class);
+        startActivity(intent);
+    }
+
 
     public void registrarDibujo(View v){
         Intent ventanaRegistrarCuento = new Intent(this, formularioCuento.class);

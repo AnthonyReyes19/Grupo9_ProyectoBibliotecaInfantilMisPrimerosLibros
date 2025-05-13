@@ -94,6 +94,7 @@
             android:id="@+id/btnCuento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="verCuento"
             android:text="Ver Cuentos" />
 
         <Button
