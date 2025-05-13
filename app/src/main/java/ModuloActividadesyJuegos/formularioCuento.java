@@ -1,4 +1,4 @@
-package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros;
+package ModuloActividadesyJuegos;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -19,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
