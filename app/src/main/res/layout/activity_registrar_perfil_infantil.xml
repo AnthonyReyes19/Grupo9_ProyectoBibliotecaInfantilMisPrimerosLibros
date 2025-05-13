@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="Registro de Perfil Infantil"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/editNombre"
+            android:hint="Nombre del niño/a"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:paddingVertical="12dp"/>
+
+        <EditText
+            android:id="@+id/editEdad"
+            android:hint="Edad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginTop="12dp"
+            android:paddingVertical="12dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecciona un Avatar"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:id="@+id/avatarSelectionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageButton
+                android:id="@+id/avatarOption1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/avatar_nino1"
+                android:background="@android:color/transparent"
+                android:contentDescription="Avatar 1"
+                android:scaleType="centerCrop"
+                android:padding="8dp" />
+
+            <ImageButton
+                android:id="@+id/avatarOption2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/avatar_nino2"
+                android:background="@android:color/transparent"
+                android:contentDescription="Avatar 2"
+                android:scaleType="centerCrop"
+                android:padding="8dp" />
+
+            <ImageButton
+                android:id="@+id/avatarOption3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/avatar_nino3"
+                android:background="@android:color/transparent"
+                android:contentDescription="Avatar 3"
+                android:scaleType="centerCrop"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecciona Intereses"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <CheckBox
+            android:id="@+id/cbCuentos"
+            android:text="Cuentos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cbAventura"
+            android:text="Aventura"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cbCiencia"
+            android:text="Ciencia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cbAnimales"
+            android:text="Animales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnGuardarPerfil"
+            android:text="Guardar Perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+</ScrollView>

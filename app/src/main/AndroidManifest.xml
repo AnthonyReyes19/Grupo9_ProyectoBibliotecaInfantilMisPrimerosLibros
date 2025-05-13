@@ -13,22 +13,13 @@
         android:theme="@style/Theme.Grupo9_ProyectoBibliotecaInfantilMisPrimerosLibros"
         tools:targetApi="31">
         <activity
-            android:name="ModuloActividadesyJuegos.verCuentoUnoPaginados"
+            android:name=".loginPrincipalModuloReyes"
             android:exported="false" />
         <activity
-            android:name="ModuloActividadesyJuegos.verCuentoUnoPaginauno"
+            android:name=".consultarUsuario"
             android:exported="false" />
         <activity
-            android:name="ModuloActividadesyJuegos.verCuento"
-            android:exported="false" />
-        <activity
-            android:name="ModuloActividadesyJuegos.loginPrincipalModuloReyes"
-            android:exported="false" />
-        <activity
-            android:name="ModuloActividadesyJuegos.consultarUsuario"
-            android:exported="false" />
-        <activity
-            android:name="ModuloActividadesyJuegos.formularioCuento"
+            android:name=".formularioCuento"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
