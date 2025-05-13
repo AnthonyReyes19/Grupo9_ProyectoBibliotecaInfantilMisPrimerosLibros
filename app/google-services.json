@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "625945901912",
+    "project_id": "bibliotecainfantil-a3d3b",
+    "storage_bucket": "bibliotecainfantil-a3d3b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625945901912:android:4f6c17731fb7b7545ec32d",
+        "android_client_info": {
+          "package_name": "com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA76O4WT0fq_KBpt8k7vEygIXPmN_gsZAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
