@@ -1,97 +1,94 @@
 package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos.loginPrincipalModuloReyes;
+import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    EditText usuarioTexto, contrasenaTexto;
-    Button botonIniciar, botonRegistrar;
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        leerCredenciales();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.open_nav, R.string.close_nav);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
-        });
-        usuarioTexto = findViewById(R.id.login_txtusuario);
-        contrasenaTexto = findViewById(R.id.login_txtclave);
-        botonIniciar = findViewById(R.id.login_btnIngresar);
-        //botonRegistrar = findViewById(R.id.btnCrearCuenta);
-    }
-
-    public void ingresarSistema(View v){
-        String usuario = usuarioTexto.getText().toString();
-        String contrasena = contrasenaTexto.getText().toString();
-
-        if (usuario.equals("admin") && contrasena.equals("grupo9")) {
-            Toast.makeText(MainActivity.this, "Acceso Concedido", Toast.LENGTH_SHORT).show();
-            Intent ventanaPrueba = new Intent(this, loginPrincipalModuloReyes.class);
-            startActivity(ventanaPrueba);
-        } else {
-            Toast.makeText(MainActivity.this, "Datos incorrectos", Toast.LENGTH_SHORT).show();
-        }
-
-        CheckBox recordar = findViewById(R.id.login_chkrecordar);
-
-        if(recordar.isChecked()){
-            guardarCredenciales(usuarioTexto.getText().toString(), contrasenaTexto.getText().toString());
+        if(savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_Inicio);
         }
 
 
-    }
 
-   // public void crearCuenta(View v) {
-   //     Intent ventanaRegistrarse = new Intent(this, CrearCuenta.class);
-    //    startActivity(ventanaRegistrarse);
-    // }
 
-    private void guardarCredenciales(String usuario, String clave){
-        SharedPreferences splogin = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        SharedPreferences.Editor speditlogin = splogin.edit();
 
-        speditlogin.putString("spUsuario", usuario);
-        speditlogin.putString("spClave", clave);
-
-        speditlogin.commit();
 
     }
-    private void leerCredenciales(){
-        SharedPreferences splogin = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        String usuario = splogin.getString("spUsuario", "");
-        String clave = splogin.getString("spClave", "");
 
-        EditText txtuser = findViewById(R.id.login_txtusuario);
-        EditText txtclave = findViewById(R.id.login_txtclave);
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        String title = item.getTitle().toString();
 
-        txtuser.setText(usuario);
-        txtclave.setText(clave);
+        if (title.equals("Inicio")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+        } else if (title.equals("Configuracion")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+        } else if (title.equals("Compartir")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShareFragment()).commit();
+        } else if (title.equals("Acerca De")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
+        } else if (title.equals("Cerrar Sesion")) {
+            Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+        } else if (title.equals("Actividades")) {
+            Intent ventana = new Intent(this, loginPrincipalModuloReyes.class);
+            startActivity(ventana);
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
-    public void ventanaPrueba(View v){
-        Intent ventanaPrueba = new Intent(this, loginPrincipalModuloReyes.class);
-        startActivity(ventanaPrueba);
+
+    @Override
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else{
+            super.onBackPressed();
+        }
     }
+
 }
