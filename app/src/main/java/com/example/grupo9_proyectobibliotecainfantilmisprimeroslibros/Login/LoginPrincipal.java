@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -22,11 +23,17 @@ import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.MainActivi
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos.loginPrincipalModuloReyes;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.RegistroPerfilInfantil;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginPrincipal extends AppCompatActivity {
 
     EditText usuarioTexto, contrasenaTexto;
     Button botonIniciar, botonRegistrar;
+    FirebaseAuth mAuth;
 
 
     @Override
@@ -34,8 +41,9 @@ public class LoginPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_principal);
+        mAuth = FirebaseAuth.getInstance();
 
-        leerCredenciales();
+        //leerCredenciales();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -49,6 +57,47 @@ public class LoginPrincipal extends AppCompatActivity {
         Button btnRegistrar = findViewById(R.id.btnRegistrar);
         btnRegistrar.setOnClickListener(v -> MostrarDialogo());
 
+
+        botonIniciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String emailUser = usuarioTexto.getText().toString().trim();
+                String passUser = contrasenaTexto.getText().toString().trim();
+
+
+                if(emailUser.isEmpty()&& passUser.isEmpty()){
+                    Toast.makeText(LoginPrincipal.this, "Ingresar los Datos", Toast.LENGTH_SHORT).show();
+                }else{
+                    loginUser(emailUser, passUser);
+                }
+
+            }
+        });
+
+
+
+
+    }
+
+    private void loginUser(String emailUser, String passUser){
+        mAuth.signInWithEmailAndPassword(emailUser, passUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    finish();
+                    startActivity(new Intent(LoginPrincipal.this, MainActivity.class));
+                    Toast.makeText(LoginPrincipal.this, "Bienvenido", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(LoginPrincipal.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LoginPrincipal.this, "Error al iniciar sesion", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     public void MostrarDialogo() {
@@ -79,53 +128,53 @@ public class LoginPrincipal extends AppCompatActivity {
         });
     }
 
-    public void ingresarSistema(View v){
-        String usuario = usuarioTexto.getText().toString();
-        String contrasena = contrasenaTexto.getText().toString();
+//    public void ingresarSistema(View v){
+//        String usuario = usuarioTexto.getText().toString();
+//        String contrasena = contrasenaTexto.getText().toString();
+//
+//        if (usuario.equals("admin") && contrasena.equals("grupo9")) {
+//            Toast.makeText(this, "Acceso Concedido", Toast.LENGTH_SHORT).show();
+//            Intent ventanaPrueba = new Intent(this, MainActivity.class);
+//            startActivity(ventanaPrueba);
+//        } else {
+//            Toast.makeText(this, "Datos incorrectos", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        //CheckBox recordar = findViewById(R.id.login_chkrecordar);
+//
+//        // if(recordar.isChecked()){
+//          //  guardarCredenciales(usuarioTexto.getText().toString(), contrasenaTexto.getText().toString());
+//        //}
+//
+//
+//    }
 
-        if (usuario.equals("admin") && contrasena.equals("grupo9")) {
-            Toast.makeText(this, "Acceso Concedido", Toast.LENGTH_SHORT).show();
-            Intent ventanaPrueba = new Intent(this, MainActivity.class);
-            startActivity(ventanaPrueba);
-        } else {
-            Toast.makeText(this, "Datos incorrectos", Toast.LENGTH_SHORT).show();
-        }
+//    private void guardarCredenciales(String usuario, String clave){
+//        SharedPreferences splogin = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor speditlogin = splogin.edit();
+//
+//        speditlogin.putString("spUsuario", usuario);
+//        speditlogin.putString("spClave", clave);
+//
+//        speditlogin.commit();
+//
+//    }
 
-        //CheckBox recordar = findViewById(R.id.login_chkrecordar);
-
-        // if(recordar.isChecked()){
-          //  guardarCredenciales(usuarioTexto.getText().toString(), contrasenaTexto.getText().toString());
-        //}
-
-
-    }
-
-    private void guardarCredenciales(String usuario, String clave){
-        SharedPreferences splogin = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        SharedPreferences.Editor speditlogin = splogin.edit();
-
-        speditlogin.putString("spUsuario", usuario);
-        speditlogin.putString("spClave", clave);
-
-        speditlogin.commit();
-
-    }
-
-    private void leerCredenciales(){
-        SharedPreferences splogin = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        String usuario = splogin.getString("spUsuario", "");
-        String clave = splogin.getString("spClave", "");
-
-        EditText txtuser = findViewById(R.id.usernameLogin_input);
-        EditText txtclave = findViewById(R.id.passwordLogin_input);
-
-        txtuser.setText(usuario);
-        txtclave.setText(clave);
-    }
-    public void ventanaPrueba(View v){
-        Intent ventanaPrueba = new Intent(this, MainActivity.class);
-        startActivity(ventanaPrueba);
-    }
+//    private void leerCredenciales(){
+//        SharedPreferences splogin = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+//        String usuario = splogin.getString("spUsuario", "");
+//        String clave = splogin.getString("spClave", "");
+//
+//        EditText txtuser = findViewById(R.id.usernameLogin_input);
+//        EditText txtclave = findViewById(R.id.passwordLogin_input);
+//
+//        txtuser.setText(usuario);
+//        txtclave.setText(clave);
+//    }
+//    public void ventanaPrueba(View v){
+//        Intent ventanaPrueba = new Intent(this, MainActivity.class);
+//        startActivity(ventanaPrueba);
+//    }
 
 
 }

@@ -54,7 +54,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:backgroundTint="@color/white"
-            android:onClick="ingresarSistema"
             android:padding="18dp"
             android:text="Iniciar Sesion"
             android:textColor="#3b84F1"
