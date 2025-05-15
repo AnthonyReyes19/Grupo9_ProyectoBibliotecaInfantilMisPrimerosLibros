@@ -5,15 +5,17 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_background"
     tools:context=".Modulo5.Administracion.RegistrarPadresYEducadores">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="45dp"
         android:layout_marginBottom="16dp"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,46 +26,69 @@
             android:id="@+id/textView17"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cedula" />
+            android:text="Cedula"
+            android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/editTextText3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rouned_corner"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="number"
+            android:paddingLeft="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFDFD"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombres" />
+            android:text="Nombres"
+            android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/editTextText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rouned_corner"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:paddingLeft="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFDFD"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textView16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Apellidos" />
+
+            android:text="Apellidos"
+            android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/editTextText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rouned_corner"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:paddingLeft="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFDFD"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textView21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rol" />
+            android:text="Rol"
+            android:textColor="#FFFFFF" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -76,7 +101,10 @@
                 android:id="@+id/autoCompleteTxt"
                 android:layout_width="302dp"
                 android:layout_height="61dp"
+                android:background="@drawable/rouned_corner"
                 android:inputType="none"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFDFD"
                 android:textSize="14sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -85,53 +113,116 @@
             android:id="@+id/textView20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha de Nacimiento" />
+            android:text="Fecha de Nacimiento"
+            android:textColor="#FFFFFF" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/editTextText6"
                 android:layout_width="157dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:layout_weight="1"
+                android:background="@drawable/rouned_corner"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="datetime|date"
+                android:paddingLeft="16dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFDFD"
+                android:textSize="20sp" />
+
+            <Space
+                android:layout_width="14dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Calendario" />
+                android:backgroundTint="@color/white"
+                android:text="Calendario"
+                android:textColor="#3b84F1"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/textView18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Correo Electronico" />
+            android:text="Correo Electronico"
+            android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/editTextText4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rouned_corner"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text|textEmailAddress"
+            android:paddingLeft="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFDFD"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textView19"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Contraseña" />
+            android:text="Contraseña"
+            android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/editTextText5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/rouned_corner"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text|textPassword"
+            android:paddingLeft="16dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFDFD"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:text="Registarse"
+                android:textColor="#3b84F1"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:text="Cancelar"
+                android:textColor="#3b84F1"
+                android:textSize="16sp" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
