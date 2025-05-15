@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Login.LoginPrincipal;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.AdminPanelActivity;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
 import androidx.activity.EdgeToEdge;
@@ -72,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (title.equals("Inicio")) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+        } else if (title.equals("Administrar Contenido")) {
+            Intent ventana = new Intent(this, AdminPanelActivity.class);
+            startActivity(ventana);
         } else if (title.equals("Configuracion")) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
         } else if (title.equals("Compartir")) {
