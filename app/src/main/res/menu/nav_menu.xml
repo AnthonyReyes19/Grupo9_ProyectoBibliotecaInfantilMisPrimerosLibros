@@ -12,9 +12,31 @@
             android:title="Inicio"/>
 
         <item
+            android:id="@+id/Catalogo"
+            android:icon="@drawable/catalogolectura"
+            android:title="Catalogo y Lectura"/>
+
+        <item
             android:id="@+id/Actividades"
-            android:icon="@drawable/nav_home"
-            android:title="Actividades"/>
+            android:icon="@drawable/juegos"
+            android:title="Actividades y Juegos"/>
+
+
+
+        <item
+            android:id="@+id/UsuarioPerfil"
+            android:icon="@drawable/perfil"
+            android:title="Usuario y Perfil Infantil"/>
+
+        <item
+            android:id="@+id/PadresEducadores"
+            android:icon="@drawable/educador"
+            android:title="Padres y Educadores"/>
+
+        <item
+            android:id="@+id/Administracion"
+            android:icon="@drawable/administrar"
+            android:title="Administrar Contenido"/>
 
         <item
             android:id="@+id/nav_Configuracion"
