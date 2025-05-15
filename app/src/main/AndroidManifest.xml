@@ -46,9 +46,9 @@
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".RegistroPerfilInfantil"
-            android:exported="false" />
+        <activity android:name=".RegistrarPerfilInfantilActivity"
+            android:exported="true" />
+
     </application>
 
 </manifest>

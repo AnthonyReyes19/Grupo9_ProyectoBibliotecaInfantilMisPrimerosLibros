@@ -22,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.MainActivity;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos.loginPrincipalModuloReyes;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.RegistrarPerfilInfantilActivity;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.RegistroPerfilInfantil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -134,7 +135,7 @@ public class LoginPrincipal extends AppCompatActivity {
 
         btnInfantil.setOnClickListener(v -> {
 
-            Intent intent = new Intent(this, RegistroPerfilInfantil.class);
+            Intent intent = new Intent(this, RegistrarPerfilInfantilActivity.class);
             startActivity(intent);
             dialog.dismiss();
         });

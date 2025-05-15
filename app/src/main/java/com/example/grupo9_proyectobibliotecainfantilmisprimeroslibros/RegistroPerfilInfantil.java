@@ -1,7 +1,8 @@
 package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros;
 
 import java.util.List;
-
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 public class RegistroPerfilInfantil {
     private String nombre;
     private int edad;

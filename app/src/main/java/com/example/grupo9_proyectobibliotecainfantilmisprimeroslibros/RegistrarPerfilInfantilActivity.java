@@ -14,6 +14,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class RegistrarPerfilInfantilActivity extends AppCompatActivity {
 
