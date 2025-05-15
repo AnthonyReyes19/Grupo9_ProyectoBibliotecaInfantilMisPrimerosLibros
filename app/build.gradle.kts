@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
     implementation("com.firebaseui:firebase-ui-auth:9.0.0")
+    implementation ("com.google.android.material:material:1.11.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

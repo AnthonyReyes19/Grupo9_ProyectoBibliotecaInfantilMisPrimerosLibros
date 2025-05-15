@@ -92,21 +92,29 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
+            android:layout_width="302dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint=" Seleccionar Rol">
+            android:background="@drawable/rouned_corner"
+            android:hint="Seleccionar Rol"
+            android:textColorHint="#FFFDFD"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:boxStrokeColor="@android:color/transparent"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintTextAppearance="@style/HintStyleBold">
 
-            <AutoCompleteTextView
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/autoCompleteTxt"
-                android:layout_width="302dp"
-                android:layout_height="61dp"
-                android:background="@drawable/rouned_corner"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:background="@android:color/transparent"
+                android:gravity="bottom"
                 android:inputType="none"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#FFFDFD"
                 android:textSize="14sp" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -123,7 +131,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextText6"
+                android:id="@+id/CajaFechareg"
                 android:layout_width="157dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -142,11 +150,12 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnFechareg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
+                android:onClick="dateReg"
                 android:text="Calendario"
                 android:textColor="#3b84F1"
                 android:textSize="16sp" />
