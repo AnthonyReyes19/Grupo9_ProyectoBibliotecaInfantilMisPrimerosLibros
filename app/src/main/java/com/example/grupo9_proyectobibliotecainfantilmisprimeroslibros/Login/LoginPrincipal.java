@@ -20,6 +20,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.MainActivity;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.RegistrarPadresYEducadores;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos.loginPrincipalModuloReyes;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.RegistrarPerfilInfantilActivity;
@@ -126,12 +127,12 @@ public class LoginPrincipal extends AppCompatActivity {
         Button btnMaestro = dialogView.findViewById(R.id.btnPerfilMaestro);
         Button btnInfantil = dialogView.findViewById(R.id.btnPerfilInfantil);
 
-        //btnMaestro.setOnClickListener(v -> {
-            // Cambia "RegistroMaestroActivity.class" por tu actividad
-            //Intent intent = new Intent(this, RegistroMaestroActivity.class);
-            //startActivity(intent);
-            //dialog.dismiss();
-        //});
+        btnMaestro.setOnClickListener(v -> {
+
+            Intent intent = new Intent(this, RegistrarPadresYEducadores.class);
+            startActivity(intent);
+            dialog.dismiss();
+        });
 
         btnInfantil.setOnClickListener(v -> {
 

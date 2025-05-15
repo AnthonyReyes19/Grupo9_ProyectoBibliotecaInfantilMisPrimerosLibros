@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Grupo9_ProyectoBibliotecaInfantilMisPrimerosLibros"
         tools:targetApi="31">
         <activity
+            android:name=".Modulo5.Administracion.RegistrarPadresYEducadores"
+            android:exported="false" />
+        <activity
             android:name=".Modulo5.Administracion.AdminPanelActivity"
             android:exported="false" />
         <activity
