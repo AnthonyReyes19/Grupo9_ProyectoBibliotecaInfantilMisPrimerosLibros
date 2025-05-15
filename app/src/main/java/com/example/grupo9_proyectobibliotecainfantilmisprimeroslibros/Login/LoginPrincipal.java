@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginPrincipal extends AppCompatActivity {
 
@@ -98,6 +99,17 @@ public class LoginPrincipal extends AppCompatActivity {
 
             }
         });
+    }
+
+    //Si tengo la sesion iniciada y salgo de la app y vuelvo a entra vuelve a abrir con la cuenta que deje abierta
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user!=null){
+            startActivity(new Intent(LoginPrincipal.this, MainActivity.class));
+            finish();
+        }
     }
 
     public void MostrarDialogo() {

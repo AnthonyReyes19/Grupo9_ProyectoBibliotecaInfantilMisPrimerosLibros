@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Login.LoginPrincipal;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
 import androidx.activity.EdgeToEdge;
@@ -26,15 +28,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos.loginPrincipalModuloReyes;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
 
+    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
         } else if (title.equals("Cerrar Sesion")) {
             Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+            mAuth.signOut();
+            Intent ventana = new Intent(this, LoginPrincipal.class);
+            startActivity(ventana);
+            finish();
         } else if (title.equals("Actividades")) {
             Intent ventana = new Intent(this, loginPrincipalModuloReyes.class);
             startActivity(ventana);
