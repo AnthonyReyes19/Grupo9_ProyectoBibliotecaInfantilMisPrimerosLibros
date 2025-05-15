@@ -83,25 +83,26 @@ public class LoginPrincipal extends AppCompatActivity {
     }
 
     private void loginUser(String emailUser, String passUser){
-        mAuth.signInWithEmailAndPassword(emailUser, passUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    finish();
-                    startActivity(new Intent(LoginPrincipal.this, MainActivity.class));
-                    Toast.makeText(LoginPrincipal.this, "Bienvenido", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(LoginPrincipal.this, "Error", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LoginPrincipal.this, "Error al iniciar sesion", Toast.LENGTH_SHORT).show();
+        if (emailUser == null || emailUser.isEmpty() || passUser == null || passUser.isEmpty()) {
+            Toast.makeText(this, "Correo y contraseña son obligatorios", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            }
-        });
+        mAuth.signInWithEmailAndPassword(emailUser, passUser)
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        finish();
+                        startActivity(new Intent(LoginPrincipal.this, MainActivity.class));
+                        Toast.makeText(LoginPrincipal.this, "Bienvenido", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginPrincipal.this, "Error", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(LoginPrincipal.this, "Error al iniciar sesión: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
+
 
     //Si tengo la sesion iniciada y salgo de la app y vuelvo a entra vuelve a abrir con la cuenta que deje abierta
     @Override
