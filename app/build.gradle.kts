@@ -43,6 +43,7 @@ dependencies {
     implementation("com.firebaseui:firebase-ui-auth:9.0.0")
     implementation ("com.google.android.material:material:1.11.0")
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -38,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
+            android:onClick="NuevoLibro"
             android:padding="18dp"
             android:text="Subir nuevo libro"
             android:textColor="#3b84F1"
