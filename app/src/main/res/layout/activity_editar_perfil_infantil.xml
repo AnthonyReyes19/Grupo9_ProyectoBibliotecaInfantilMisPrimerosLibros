@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="Selecciona un avatar:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <ImageButton
+                android:id="@+id/avatarOption1Editar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/avatar_nino1"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Avatar 1"
+                android:layout_margin="8dp"
+                android:padding="4dp"/>
+
+            <ImageButton
+                android:id="@+id/avatarOption2Editar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/avatar_nino2"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Avatar 2"
+                android:layout_margin="8dp"
+                android:padding="4dp"/>
+
+            <ImageButton
+                android:id="@+id/avatarOption3Editar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/avatar_nino3"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Avatar 3"
+                android:layout_margin="8dp"
+                android:padding="4dp"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editNombreEditar"
+            android:hint="Nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/editEdadEditar"
+            android:hint="Edad"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:text="Intereses:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <CheckBox
+            android:id="@+id/cbCuentosEditar"
+            android:text="Cuentos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <CheckBox
+            android:id="@+id/cbAventuraEditar"
+            android:text="Aventura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <CheckBox
+            android:id="@+id/cbCienciaEditar"
+            android:text="Ciencia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <CheckBox
+            android:id="@+id/cbAnimalesEditar"
+            android:text="Animales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnActualizarPerfil"
+            android:text="Actualizar Perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>
