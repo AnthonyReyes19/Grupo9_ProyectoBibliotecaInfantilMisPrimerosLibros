@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Grupo9_ProyectoBibliotecaInfantilMisPrimerosLibros"
         tools:targetApi="31">
+        <activity
+            android:name=".ModuloPadresYEducadores.ControlParental"
+            android:exported="false" />
+        <activity
+            android:name=".ModuloPadresYEducadores.ReportesParaPadres"
+            android:exported="false" />
+        <activity
+            android:name=".ModuloPadresYEducadores.Reportes"
+            android:exported="false"
+            android:theme="@style/Theme.Grupo9_ProyectoBibliotecaInfantilMisPrimerosLibros" />
+        <activity
+            android:name=".ModuloPadresYEducadores.MenudelmoduloPadresEducadores"
+            android:exported="false" />
         <activity
             android:name=".Modulo5.Administracion.SubirLibro"
             android:exported="false" />

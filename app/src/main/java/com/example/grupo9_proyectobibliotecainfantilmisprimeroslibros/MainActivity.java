@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Login.LoginPrincipal;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.AdminPanelActivity;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloPadresYEducadores.MenudelmoduloPadresEducadores;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
 import androidx.activity.EdgeToEdge;
@@ -90,6 +91,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         } else if (title.equals("Actividades y Juegos")) {
             Intent ventana = new Intent(this, loginPrincipalModuloReyes.class);
+            startActivity(ventana);
+        } else if(title.equals("Padres y Educadores")){
+            Intent ventana = new Intent(this, MenudelmoduloPadresEducadores.class);
             startActivity(ventana);
         }
 
