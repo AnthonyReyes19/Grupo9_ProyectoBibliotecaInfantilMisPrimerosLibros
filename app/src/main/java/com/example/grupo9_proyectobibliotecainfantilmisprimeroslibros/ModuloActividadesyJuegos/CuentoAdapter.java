@@ -44,12 +44,12 @@ public class CuentoAdapter extends RecyclerView.Adapter<CuentoAdapter.CuentoView
             Intent intent;
 
             switch (titulo) {
-                case "Cenicienta":
+                case "prueba":
                     intent = new Intent(context, verCuentoUnoPaginauno.class);
                     break;
-                case "La Bella durmiente":
-                    intent = new Intent(context, verCuentoUnoPaginados.class);
-                    break;
+                //case "La Bella durmiente":
+                //    intent = new Intent(context, verCuentoUnoPaginados.class);
+                //    break;
                 default:
                     Toast.makeText(context, "Cuento no disponible", Toast.LENGTH_SHORT).show();
                     return;

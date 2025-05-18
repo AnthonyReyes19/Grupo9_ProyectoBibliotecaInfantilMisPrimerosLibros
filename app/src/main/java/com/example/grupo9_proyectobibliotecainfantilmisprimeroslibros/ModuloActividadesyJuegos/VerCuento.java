@@ -13,11 +13,15 @@ import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.firebase.database.*;
+
+
+
 public class VerCuento extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private BDOpenHelper dbHelper;
     private List<Cuento> listaCuentos = new ArrayList<>();
+    private CuentoAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,26 +31,33 @@ public class VerCuento extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewCuentos);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        dbHelper = new BDOpenHelper(this);
-
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM cuento", null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(0);
-                String titulo = cursor.getString(1);
-                String autor = cursor.getString(2);
-                float rating = cursor.getFloat(3);
-
-                listaCuentos.add(new Cuento(id, titulo, autor, rating));
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-
-        CuentoAdapter adapter = new CuentoAdapter(listaCuentos, this);
+        adapter = new CuentoAdapter(listaCuentos, this);
         recyclerView.setAdapter(adapter);
+
+        cargarCuentosDesdeFirebase();
+    }
+
+    private void cargarCuentosDesdeFirebase() {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference()
+                .child("actividades")
+                .child("cuentos_registrados");
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                listaCuentos.clear();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Cuento cuento = ds.getValue(Cuento.class);
+                    cuento.setId(ds.getKey());
+                    listaCuentos.add(cuento);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
     }
 }

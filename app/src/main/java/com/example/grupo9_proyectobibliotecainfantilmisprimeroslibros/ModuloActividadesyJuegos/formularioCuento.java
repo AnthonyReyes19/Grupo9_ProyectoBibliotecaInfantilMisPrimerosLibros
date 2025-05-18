@@ -1,8 +1,6 @@
 package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import java.util.HashMap;
+import java.util.Map;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -86,34 +89,68 @@ public class formularioCuento extends AppCompatActivity {
                 Toast.makeText(this, "Hubo error al guardar los datos en el SD", Toast.LENGTH_SHORT).show();
             }
             //Para guardar en la BD
-            if(guardarBD(titulo.getText().toString(), autor.getText().toString(), nivel.getRating())){
-                Toast.makeText(this, "Datos guardados en BD correctamente", Toast.LENGTH_LONG).show();
-            } else{
-                Toast.makeText(this,"Hubo error en BD", Toast.LENGTH_LONG).show();
-            }
+            //if(guardarBD(titulo.getText().toString(), autor.getText().toString(), nivel.getRating())){
+            //    Toast.makeText(this, "Datos guardados en BD correctamente", Toast.LENGTH_LONG).show();
+            //} else{
+            //    Toast.makeText(this,"Hubo error en BD", Toast.LENGTH_LONG).show();
+            //}
+        String valorSeleccionado = ensenar.getSelectedItem().toString();
+        String edadSeleccionada = edades.getSelectedItem().toString();
+
+        guardarEnFirebase(
+                titulo.getText().toString(),
+                autor.getText().toString(),
+                nivel.getRating(),
+                valorSeleccionado,
+                edadSeleccionada
+        );
+
 
     }
 
-    public boolean guardarBD(String titulo, String autor, float rating){
-        BDOpenHelper BDProyecto = new BDOpenHelper(this);
-        final SQLiteDatabase BDProyectoEdit = BDProyecto.getWritableDatabase();
+    //public boolean guardarBD(String titulo, String autor, float rating){
+    //    BDOpenHelper BDProyecto = new BDOpenHelper(this);
+    //    final SQLiteDatabase BDProyectoEdit = BDProyecto.getWritableDatabase();
 
-        if(BDProyectoEdit != null){
-            ContentValues cv = new ContentValues();
-            cv.put("titulo", titulo);
-            cv.put("autor", autor);
-            cv.put("ratingNivel", rating);
+    //    if(BDProyectoEdit != null){
+    //        ContentValues cv = new ContentValues();
+    //        cv.put("titulo", titulo);
+    //        cv.put("autor", autor);
+    //        cv.put("ratingNivel", rating);
 
-            BDProyectoEdit.insert("cuento",null, cv);
-            //BDProyectoEdit.close();
-            return true;
+    //        BDProyectoEdit.insert("cuento",null, cv);
+    //        //BDProyectoEdit.close();
+    //        return true;
 
-        }else{
-            //BDProyectoEdit.close();
-            return false;
+    //    }else{
+    //        //BDProyectoEdit.close();
+    //        return false;
 
-        }
+    //    }
+    //}
+    public void guardarEnFirebase(String titulo, String autor, float rating, String valor, String edad){
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+        String id = dbRef.push().getKey(); // genera un ID único
+
+        Map<String, Object> datos = new HashMap<>();
+        datos.put("titulo", titulo);
+        datos.put("autor", autor);
+        datos.put("nivel", rating);
+        datos.put("valor", valor);
+        datos.put("edadRecomendada", edad);
+
+        dbRef.child("actividades")
+                .child("cuentos_registrados")
+                .child(id)
+                .setValue(datos)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Guardado en Firebase", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error al guardar en Firebase", Toast.LENGTH_SHORT).show();
+                });
     }
+
 
     private boolean guardarenSD(String datos) {
         try{
@@ -144,7 +181,7 @@ public class formularioCuento extends AppCompatActivity {
         startActivity(ventanaLogin);
     }
     public void consultarDatos(View v){
-        Intent ventanaLogin = new Intent(this, consultarUsuario.class);
+        Intent ventanaLogin = new Intent(this, consultarDatos.class);
         startActivity(ventanaLogin);
     }
 }

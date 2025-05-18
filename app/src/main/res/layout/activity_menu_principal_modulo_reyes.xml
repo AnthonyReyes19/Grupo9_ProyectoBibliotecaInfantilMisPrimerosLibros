@@ -40,6 +40,7 @@
             android:id="@+id/btnDibujo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="verDibujo"
             android:text="Dibujo" />
 
     </LinearLayout>
@@ -65,13 +66,8 @@
             android:id="@+id/btnJuegos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="verJuegos"
             android:text="Ver Juegos" />
-
-        <Button
-            android:id="@+id/btnRegistroJUegos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Registro" />
 
     </LinearLayout>
 

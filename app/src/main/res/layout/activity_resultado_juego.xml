@@ -5,20 +5,49 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".resultadoJuego">
+    tools:context=".ModuloActividadesyJuegos.resultadoJuego">
 
     <LinearLayout
-        android:layout_width="130dp"
-        android:layout_height="17dp"
+        android:layout_width="408dp"
+        android:layout_height="281dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"></LinearLayout>
+        tools:layout_editor_absoluteY="117dp">
 
-    <TextView
-        android:id="@+id/textView25"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="173dp"
-        tools:layout_editor_absoluteY="165dp" />
+        <TextView
+            android:id="@+id/resultadoTexto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="¡Buen trabajo!" />
+
+        <RatingBar
+            android:id="@+id/ratingResultado"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:numStars="3"
+            android:stepSize="1"/>
+
+        <Button
+            android:id="@+id/btnReintentar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver a jugar" />
+
+        <Button
+            android:id="@+id/btnJugarOtro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="otroJuego"
+            android:text="Jugar Otro Juego" />
+
+        <Button
+            android:id="@+id/btnVolverMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="regresar"
+            android:text="Volver" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

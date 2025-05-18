@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ModuloActividadesyJuegos.consultarUsuario">
+    tools:context=".ModuloActividadesyJuegos.consultarDatos">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -14,7 +14,7 @@
         android:background="@color/black"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="Consulta de Usuarios"
+        app:title="Consulta de Cuentos"
         app:titleTextColor="#FF5722"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="2dp" />
@@ -31,12 +31,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/cons_txtId"
+            android:id="@+id/cons_txtTitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Identificador"
-            android:inputType="number" />
+            android:inputType="text" />
 
         <Button
             android:id="@+id/cons_btnBuscar"
@@ -82,7 +82,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="text"
+                android:onClick="actualizarCuento" />
 
         </LinearLayout>
 
@@ -103,7 +104,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="text"
+                android:onClick="eliminarCuento" />
 
         </LinearLayout>
 

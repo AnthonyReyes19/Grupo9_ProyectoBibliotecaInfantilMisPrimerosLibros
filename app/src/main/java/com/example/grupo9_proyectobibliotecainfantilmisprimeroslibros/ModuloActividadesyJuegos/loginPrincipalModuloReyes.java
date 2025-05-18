@@ -19,7 +19,7 @@ public class loginPrincipalModuloReyes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login_principal_modulo_reyes);
+        setContentView(R.layout.activity_menu_principal_modulo_reyes);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -36,7 +36,15 @@ public class loginPrincipalModuloReyes extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void verJuegos(View v){
+        Intent intent = new Intent(this, juegoValores.class);
+        startActivity(intent);
+    }
 
+    public void verDibujo(View v){
+        Intent intent = new Intent(this, dibujo.class);
+        startActivity(intent);
+    }
     public void registrarDibujo(View v){
         Intent ventanaRegistrarCuento = new Intent(this, formularioCuento.class);
         startActivity(ventanaRegistrarCuento);
