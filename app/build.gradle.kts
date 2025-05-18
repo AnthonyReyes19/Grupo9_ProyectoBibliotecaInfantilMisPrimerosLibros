@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
-    //id("com.android.application")
-    id("com.google.gms.google-services")
+    //id ("com.android.application")
+    id ("com.google.gms.google-services")
 }
 
 android {
@@ -48,7 +48,8 @@ dependencies {
     implementation("com.firebaseui:firebase-ui-auth:9.0.0")
     implementation("com.firebaseui:firebase-ui-firestore:9.0.0")
     implementation ("com.google.android.material:material:1.11.0")
-    implementation ("com.google.android.gms:play-services-location:21.3.0")
+    // Google Play Services
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
     implementation(libs.navigation.fragment)
