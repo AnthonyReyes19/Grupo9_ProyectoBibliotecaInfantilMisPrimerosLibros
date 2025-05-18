@@ -1,0 +1,85 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Barra superior -->
+    <TextView
+        android:id="@+id/tvCatalogTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="412dp"
+        android:layout_height="58dp"
+        android:background="#3F51B5"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Catálogo de Libros"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Barra de búsqueda -->
+
+    <!-- Filtros -->
+
+    <!-- Lista de libros -->
+
+    <SearchView
+        android:id="@+id/searchView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCatalogTitle"
+        android:layout_width="270dp"
+        android:layout_height="40dp"
+        android:queryHint="Buscar libros..."
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="69dp" />
+
+    <Spinner
+        android:id="@+id/spinnerEdad"
+        app:layout_constraintEnd_toStartOf="@id/spinnerCategory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView"
+        android:layout_width="130dp"
+        android:layout_height="35dp"
+        android:prompt="Edad"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="129dp" />
+
+    <Spinner
+        android:id="@+id/spinnerCategoria"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/spinnerAge"
+        app:layout_constraintTop_toBottomOf="@id/searchView"
+        android:layout_width="130dp"
+        android:layout_height="35dp"
+        android:prompt="Categoría"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="129dp" />
+
+    <Button
+        android:id="@+id/btnBuscar"
+        android:layout_width="99dp"
+        android:layout_height="40dp"
+        android:text="Buscar"
+        android:textColorLink="#3F51B5"
+        tools:layout_editor_absoluteX="296dp"
+        tools:layout_editor_absoluteY="69dp" />
+
+    <Button
+        android:id="@+id/btnBuscar2"
+        android:layout_width="99dp"
+        android:layout_height="40dp"
+        android:text="Buscar"
+        android:textColorLink="#3F51B5"
+        tools:layout_editor_absoluteX="296dp"
+        tools:layout_editor_absoluteY="129dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="380dp"
+        android:layout_height="498dp"
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="184dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
