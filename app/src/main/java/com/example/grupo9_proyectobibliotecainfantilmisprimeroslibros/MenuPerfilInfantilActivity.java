@@ -1,12 +1,14 @@
 package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros;
-import android.content.DialogInterface;
+import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.cardview.widget.CardView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,8 +17,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MenuPerfilInfantilActivity extends AppCompatActivity {
 
-    private CardView cardVerPerff, cardEditarPerff, cardEliminarPerff;
-    private String perfilId = "perfil_infantil_001";
+    private CardView cardRegistrarPerff, cardVerPerff, cardEditarPerff, cardEliminarPerff;
+    private String perfilId;
     private DatabaseReference databaseRef;
 
     @Override
@@ -24,33 +26,73 @@ public class MenuPerfilInfantilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_perfilinfantil);
 
-        databaseRef = FirebaseDatabase.getInstance().getReference("perfiles").child(perfilId);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            perfilId = user.getUid();
+            databaseRef = FirebaseDatabase.getInstance().getReference("perfiles").child(perfilId);
+        } else {
+            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
-
+        cardRegistrarPerff = findViewById(R.id.cardRegistrarPerfil);
         cardVerPerff = findViewById(R.id.cardVerPerfil);
         cardEditarPerff = findViewById(R.id.cardEditarPerfil);
         cardEliminarPerff = findViewById(R.id.cardEliminarPerfil);
 
+        cardRegistrarPerff.setOnClickListener(v -> {
+            Intent intent = new Intent(MenuPerfilInfantilActivity.this, RegistrarPerfilInfantilActivity.class);
+            startActivity(intent);
+        });
 
         cardVerPerff.setOnClickListener(v -> cargarPerfil());
         cardEditarPerff.setOnClickListener(v -> editarPerfil());
         cardEliminarPerff.setOnClickListener(v -> mostrarDialogoEliminar());
     }
 
+    /*private void cargarPerfil() {
+        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    RegistroPerfilInfantil perfil = snapshot.getValue(RegistroPerfilInfantil.class);
+                    if (perfil != null) {
+                        Intent intent = new Intent(MenuPerfilInfantilActivity.this, ConsultarPerfilActivity.class);
+                        intent.putExtra("nombre", perfil.getNombre());
+                        intent.putExtra("edad", perfil.getEdad());
+                        intent.putExtra("avatar", perfil.getAvatar());
+                        intent.putStringArrayListExtra("intereses", new ArrayList<>(perfil.getIntereses()));
+                        startActivity(intent);
+                    }
+                } else {
+                    Toast.makeText(MenuPerfilInfantilActivity.this, "Perfil no encontrado", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MenuPerfilInfantilActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }*/
     private void cargarPerfil() {
         databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    String nombre = snapshot.child("nombre").getValue(String.class);
-                    int edad = snapshot.child("edad").getValue(Integer.class);
-                    String genero = snapshot.child("genero").getValue(String.class);
+                    RegistroPerfilInfantil perfil = snapshot.getValue(RegistroPerfilInfantil.class);
+                    if (perfil != null) {
+                        ArrayList<String> intereses = perfil.getIntereses() != null ?
+                                new ArrayList<>(perfil.getIntereses()) : new ArrayList<>();
 
-                    Intent intent = new Intent(MenuPerfilInfantilActivity.this, ConsultarPerfilActivity.class);
-                    intent.putExtra("nombre", nombre);
-                    intent.putExtra("edad", edad);
-                    intent.putExtra("genero", genero);
-                    startActivity(intent);
+                        Intent intent = new Intent(MenuPerfilInfantilActivity.this, ConsultarPerfilActivity.class);
+                        intent.putExtra("nombre", perfil.getNombre());
+                        intent.putExtra("edad", perfil.getEdad());
+                        intent.putExtra("avatar", perfil.getAvatar());
+                        intent.putStringArrayListExtra("intereses", intereses);
+                        startActivity(intent);
+                    }
                 } else {
                     Toast.makeText(MenuPerfilInfantilActivity.this, "Perfil no encontrado", Toast.LENGTH_SHORT).show();
                 }
@@ -63,28 +105,11 @@ public class MenuPerfilInfantilActivity extends AppCompatActivity {
         });
     }
 
+
     private void editarPerfil() {
-        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String nombreActual = snapshot.child("nombre").getValue(String.class);
-                    int edadActual = snapshot.child("edad").getValue(Integer.class);
-                    String generoActual = snapshot.child("genero").getValue(String.class);
-
-                    Intent intent = new Intent(MenuPerfilInfantilActivity.this, EditarPerfilInfantilActivity.class);
-                    intent.putExtra("nombre", nombreActual);
-                    intent.putExtra("edad", edadActual);
-                    intent.putExtra("genero", generoActual);
-                    startActivityForResult(intent, 1);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MenuPerfilInfantilActivity.this, "Error al cargar datos", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Intent intent = new Intent(MenuPerfilInfantilActivity.this, EditarPerfilInfantilActivity.class);
+        intent.putExtra("perfilId", perfilId);
+        startActivity(intent);
     }
 
     private void mostrarDialogoEliminar() {
@@ -100,26 +125,9 @@ public class MenuPerfilInfantilActivity extends AppCompatActivity {
         databaseRef.removeValue()
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Perfil eliminado", Toast.LENGTH_SHORT).show();
-                    finish(); // Cierra la actividad actual
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(this, "Error al eliminar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            String nuevoNombre = data.getStringExtra("nuevoNombre");
-            int nuevaEdad = data.getIntExtra("nuevaEdad", 0);
-            String nuevoGenero = data.getStringExtra("nuevoGenero");
-
-            databaseRef.child("nombre").setValue(nuevoNombre);
-            databaseRef.child("edad").setValue(nuevaEdad);
-            databaseRef.child("genero").setValue(nuevoGenero);
-
-            Toast.makeText(this, "Perfil actualizado", Toast.LENGTH_SHORT).show();
-        }
     }
 }

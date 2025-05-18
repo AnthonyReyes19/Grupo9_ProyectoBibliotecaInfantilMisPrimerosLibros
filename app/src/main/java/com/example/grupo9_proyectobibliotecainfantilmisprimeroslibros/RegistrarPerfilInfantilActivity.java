@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import android.content.SharedPreferences;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Bundle;
@@ -89,13 +89,19 @@ public class RegistrarPerfilInfantilActivity extends AppCompatActivity {
         if (cbAnimales.isChecked()) intereses.add("Animales");
 
         RegistroPerfilInfantil perfil = new RegistroPerfilInfantil(nombre, edad, selectedAvatar, intereses);
+        DatabaseReference newRef = dbRef.push();
+        String perfilId = newRef.getKey();
 
-        /*dbRef.push().setValue(perfil)
-                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Perfil guardado correctamente", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(this, "Error al guardar: " + e.getMessage(), Toast.LENGTH_SHORT).show());*/
-        String key = dbRef.push().getKey();
-        dbRef.child(key).setValue(perfil)
-                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Perfil guardado correctamente", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(this, "Error al guardar: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        newRef.setValue(perfil)
+                .addOnSuccessListener(aVoid -> {
+                    SharedPreferences prefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
+                    prefs.edit().putString("perfilId", perfilId).apply();
+
+                    Toast.makeText(this, "Perfil guardado correctamente", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error al guardar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 }
