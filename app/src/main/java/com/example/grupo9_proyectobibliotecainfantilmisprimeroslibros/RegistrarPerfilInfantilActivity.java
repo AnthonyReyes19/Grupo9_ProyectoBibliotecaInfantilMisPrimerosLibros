@@ -63,6 +63,7 @@ public class RegistrarPerfilInfantilActivity extends AppCompatActivity {
         selectedAvatarResId = resId;
         selectedAvatar = nombreAvatar;
 
+
         avatarOption1.setAlpha(0.5f);
         avatarOption2.setAlpha(0.5f);
         avatarOption3.setAlpha(0.5f);

@@ -53,7 +53,13 @@ public class EditarPerfilInfantilActivity extends AppCompatActivity {
             if (perfil != null) {
                 editNombre.setText(perfil.getNombre());
                 editEdad.setText(String.valueOf(perfil.getEdad()));
+
+                // Verifica si el avatar es nulo antes de asignarlo
                 selectedAvatar = perfil.getAvatar();
+                if (selectedAvatar == null) {
+                    selectedAvatar = "avatar1"; // Valor predeterminado
+                }
+
                 resaltarAvatarSeleccionado();
 
                 if (perfil.getIntereses() != null) {
@@ -92,6 +98,14 @@ public class EditarPerfilInfantilActivity extends AppCompatActivity {
         avatarOption1.setAlpha(0.5f);
         avatarOption2.setAlpha(0.5f);
         avatarOption3.setAlpha(0.5f);
+
+        // Verifica si selectedAvatar es nulo antes de usarlo
+        if (selectedAvatar == null) {
+            // Establece un valor predeterminado o simplemente retorna
+            selectedAvatar = "avatar1"; // valor predeterminado
+            avatarOption1.setAlpha(1.0f);
+            return;
+        }
 
         switch (selectedAvatar) {
             case "avatar1":
