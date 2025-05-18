@@ -60,12 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_Inicio);
         }
-
-
-
-
-
-
     }
 
     @Override
@@ -95,11 +89,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if(title.equals("Padres y Educadores")){
             Intent ventana = new Intent(this, MenudelmoduloPadresEducadores.class);
             startActivity(ventana);
+        }   else if(title.equals("Usuario y Perfil Infantil")) {
+            Intent ventana = new Intent(this, MenuPerfilInfantilActivity.class);
+            startActivity(ventana);
         }
-
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     @Override
     public void onBackPressed(){
