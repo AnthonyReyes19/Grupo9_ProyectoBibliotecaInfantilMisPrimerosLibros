@@ -1,11 +1,13 @@
 package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Base64;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,10 +24,12 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class SubirLibro extends AppCompatActivity {
@@ -33,6 +37,8 @@ public class SubirLibro extends AppCompatActivity {
     EditText etTitulo, etCategoria, etEdad;
     ImageView imgPortada;
     Button btnSeleccionarImagen, btnSeleccionarPdf, btnSubir;
+
+    private static final int MAX_FILE_SIZE_BYTES = 500 * 1024; // 500 KB
 
     Uri imagenUri = null;
     Uri pdfUri = null;
@@ -103,13 +109,37 @@ public class SubirLibro extends AppCompatActivity {
             return;
         }
 
-        String key = databaseRef.push().getKey();
-        if (key == null) {
-            Toast.makeText(this, "Error generando clave única", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         try {
+            // Validar tamaño de imagen
+            Cursor cursorImg = getContentResolver().query(imagenUri, null, null, null, null);
+            if (cursorImg != null) {
+                int sizeIndex = cursorImg.getColumnIndex(OpenableColumns.SIZE);
+                cursorImg.moveToFirst();
+                long imageSize = cursorImg.getLong(sizeIndex);
+                cursorImg.close();
+
+                if (imageSize > MAX_FILE_SIZE_BYTES) {
+                    String sizeInKB = String.format(Locale.getDefault(), "%.2f", imageSize / 1024.0);
+                    Toast.makeText(this, "La imagen pesa " + sizeInKB + " KB y excede el límite de 500 KB", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+
+            // Validar tamaño de PDF
+            Cursor cursorPdf = getContentResolver().query(pdfUri, null, null, null, null);
+            if (cursorPdf != null) {
+                int sizeIndex = cursorPdf.getColumnIndex(OpenableColumns.SIZE);
+                cursorPdf.moveToFirst();
+                long pdfSize = cursorPdf.getLong(sizeIndex);
+                cursorPdf.close();
+
+                if (pdfSize > MAX_FILE_SIZE_BYTES) {
+                    String sizeInKB = String.format(Locale.getDefault(), "%.2f", pdfSize / 1024.0);
+                    Toast.makeText(this, "El PDF pesa " + sizeInKB + " KB y excede el límite de 500 KB", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+
             // Convertir imagen a Base64
             InputStream inputStreamImg = getContentResolver().openInputStream(imagenUri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStreamImg);
@@ -127,7 +157,7 @@ public class SubirLibro extends AppCompatActivity {
             }
             String pdfBase64 = Base64.encodeToString(baosPdf.toByteArray(), Base64.DEFAULT);
 
-            // Guardar en Firebase
+            // Crear objeto a guardar
             Map<String, Object> libroData = new HashMap<>();
             libroData.put("titulo", titulo);
             libroData.put("categoria", categoria);
@@ -135,14 +165,17 @@ public class SubirLibro extends AppCompatActivity {
             libroData.put("portadaBase64", imgBase64);
             libroData.put("pdfBase64", pdfBase64);
 
-            databaseRef.child(key).setValue(libroData).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Toast.makeText(this, "Libro subido correctamente", Toast.LENGTH_LONG).show();
-                    finish();
-                } else {
-                    Toast.makeText(this, "Error al guardar en base de datos", Toast.LENGTH_SHORT).show();
-                }
-            });
+            // Guardar en Firestore
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("libros")
+                    .add(libroData)
+                    .addOnSuccessListener(documentReference -> {
+                        Toast.makeText(this, "Libro subido correctamente", Toast.LENGTH_LONG).show();
+                        finish();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Error al guardar en Firestore", Toast.LENGTH_SHORT).show();
+                    });
 
         } catch (Exception e) {
             e.printStackTrace();
