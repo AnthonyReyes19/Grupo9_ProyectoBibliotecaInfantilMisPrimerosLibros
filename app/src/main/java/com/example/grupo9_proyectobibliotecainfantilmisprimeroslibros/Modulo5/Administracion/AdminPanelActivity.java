@@ -47,4 +47,9 @@ public class AdminPanelActivity extends AppCompatActivity {
         startActivity(ventana);
     }
 
+    public void AdministrarLibro(View v){
+        Intent ventana = new Intent(this, AdministracionLibros.class);
+        startActivity(ventana);
+    }
+
 }
