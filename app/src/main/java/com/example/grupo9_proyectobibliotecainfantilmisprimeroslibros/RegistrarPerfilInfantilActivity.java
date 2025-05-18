@@ -90,7 +90,9 @@ public class RegistrarPerfilInfantilActivity extends AppCompatActivity {
 
         RegistroPerfilInfantil perfil = new RegistroPerfilInfantil(nombre, edad, selectedAvatar, intereses);
 
-        dbRef.setValue(perfil)
+        // Usar push() para generar una clave única automáticamente
+        DatabaseReference nuevoPerfil = dbRef.push();
+        nuevoPerfil.setValue(perfil)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Perfil guardado correctamente", Toast.LENGTH_SHORT).show();
                     finish();

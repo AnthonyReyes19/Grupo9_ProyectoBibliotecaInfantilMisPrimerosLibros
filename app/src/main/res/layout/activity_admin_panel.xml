@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
+    android:onClick="AdministrarLibro"
     tools:context=".Modulo5.Administracion.AdminPanelActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -23,7 +24,7 @@
             android:text="Opciones de Administracion"
             android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
     <TextView

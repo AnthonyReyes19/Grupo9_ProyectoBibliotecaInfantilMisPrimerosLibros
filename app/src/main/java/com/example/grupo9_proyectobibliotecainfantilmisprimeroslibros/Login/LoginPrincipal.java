@@ -1,6 +1,7 @@
 package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.MainActivi
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.RegistrarPadresYEducadores;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.RegistrarPerfilInfantilActivity;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.SeleccionarPerfil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -82,7 +84,8 @@ public class LoginPrincipal extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         finish();
-                        startActivity(new Intent(LoginPrincipal.this, MainActivity.class));
+                        // Cambio aquí: redirigir a selección de perfil en lugar de MainActivity
+                        startActivity(new Intent(LoginPrincipal.this, SeleccionarPerfil.class));
                         Toast.makeText(LoginPrincipal.this, "Bienvenido", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(LoginPrincipal.this, "Error", Toast.LENGTH_SHORT).show();
@@ -93,16 +96,28 @@ public class LoginPrincipal extends AppCompatActivity {
                 });
     }
 
-
     //Si tengo la sesion iniciada y salgo de la app y vuelvo a entra vuelve a abrir con la cuenta que deje abierta
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
-        if(user!=null){
-            startActivity(new Intent(LoginPrincipal.this, MainActivity.class));
+        if (user != null) {
+            // Verificar si hay un perfil guardado en SharedPreferences
+            SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+            String tipoUsuario = sharedPreferences.getString("tipo_usuario", null);
+
+            if (tipoUsuario != null) {
+                // Si ya hay un tipo de usuario guardado, ir directamente a MainActivity
+                startActivity(new Intent(LoginPrincipal.this, MainActivity.class));
+            } else {
+                // Si no hay tipo de usuario, ir a selección de perfil
+                startActivity(new Intent(LoginPrincipal.this, SeleccionarPerfil.class));
+            }
             finish();
         }
+
+
+
     }
 
     public void MostrarDialogo() {
@@ -132,54 +147,5 @@ public class LoginPrincipal extends AppCompatActivity {
             dialog.dismiss();
         });
     }
-
-//    public void ingresarSistema(View v){
-//        String usuario = usuarioTexto.getText().toString();
-//        String contrasena = contrasenaTexto.getText().toString();
-//
-//        if (usuario.equals("admin") && contrasena.equals("grupo9")) {
-//            Toast.makeText(this, "Acceso Concedido", Toast.LENGTH_SHORT).show();
-//            Intent ventanaPrueba = new Intent(this, MainActivity.class);
-//            startActivity(ventanaPrueba);
-//        } else {
-//            Toast.makeText(this, "Datos incorrectos", Toast.LENGTH_SHORT).show();
-//        }
-//
-//        //CheckBox recordar = findViewById(R.id.login_chkrecordar);
-//
-//        // if(recordar.isChecked()){
-//          //  guardarCredenciales(usuarioTexto.getText().toString(), contrasenaTexto.getText().toString());
-//        //}
-//
-//
-//    }
-
-//    private void guardarCredenciales(String usuario, String clave){
-//        SharedPreferences splogin = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-//        SharedPreferences.Editor speditlogin = splogin.edit();
-//
-//        speditlogin.putString("spUsuario", usuario);
-//        speditlogin.putString("spClave", clave);
-//
-//        speditlogin.commit();
-//
-//    }
-
-//    private void leerCredenciales(){
-//        SharedPreferences splogin = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-//        String usuario = splogin.getString("spUsuario", "");
-//        String clave = splogin.getString("spClave", "");
-//
-//        EditText txtuser = findViewById(R.id.usernameLogin_input);
-//        EditText txtclave = findViewById(R.id.passwordLogin_input);
-//
-//        txtuser.setText(usuario);
-//        txtclave.setText(clave);
-//    }
-//    public void ventanaPrueba(View v){
-//        Intent ventanaPrueba = new Intent(this, MainActivity.class);
-//        startActivity(ventanaPrueba);
-//    }
-
 
 }
