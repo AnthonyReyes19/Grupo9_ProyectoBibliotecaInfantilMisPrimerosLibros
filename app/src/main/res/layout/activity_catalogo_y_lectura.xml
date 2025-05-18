@@ -1,91 +1,81 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-<!--    &lt;!&ndash; Barra superior &ndash;&gt;-->
-<!--    <TextView-->
-<!--        android:id="@+id/tvCatalogTitle"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:layout_width="412dp"-->
-<!--        android:layout_height="58dp"-->
-<!--        android:background="#3F51B5"-->
-<!--        android:gravity="center"-->
-<!--        android:padding="16dp"-->
-<!--        android:text="Catálogo de Libros"-->
-<!--        android:textColor="#FFFFFF"-->
-<!--        android:textSize="20sp"-->
-<!--        android:textStyle="bold" />-->
+    <TextView
+        android:id="@+id/tvCatalogTitle"
+        android:layout_width="412dp"
+        android:layout_height="58dp"
+        android:background="#3F51B5"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Catálogo de Libros"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<!--    &lt;!&ndash; Barra de búsqueda &ndash;&gt;-->
 
-<!--    &lt;!&ndash; Filtros &ndash;&gt;-->
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:queryHint="Buscar libros..."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCatalogTitle" />
 
-<!--    &lt;!&ndash; Lista de libros &ndash;&gt;-->
+    <Button
+        android:id="@+id/btnBuscar"
+        android:layout_width="99dp"
+        android:layout_height="50dp"
+        android:text="Buscar"
+        android:textColorLink="#3F51B5"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="296dp"
+        tools:layout_editor_absoluteY="58dp" />
 
-<!--    <SearchView-->
-<!--        android:id="@+id/searchView"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/tvCatalogTitle"-->
-<!--        android:layout_width="270dp"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:queryHint="Buscar libros..."-->
-<!--        tools:layout_editor_absoluteX="16dp"-->
-<!--        tools:layout_editor_absoluteY="69dp" />-->
+    <Button
+        android:id="@+id/btnBuscar2"
+        android:layout_width="99dp"
+        android:layout_height="50dp"
+        android:text="Buscar"
+        android:textColorLink="#3F51B5"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="296dp"
+        tools:layout_editor_absoluteY="118dp" />
 
-<!--    <Spinner-->
-<!--        android:id="@+id/spinnerEdad"-->
-<!--        app:layout_constraintEnd_toStartOf="@id/spinnerCategoria"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/searchView"-->
-<!--        android:layout_width="130dp"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:prompt="Edad"-->
-<!--        tools:layout_editor_absoluteX="16dp"-->
-<!--        tools:layout_editor_absoluteY="129dp"-->
-<!--        tools:ignore="UnknownId" />-->
+    <Spinner
+        android:id="@+id/spinnerAge"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:prompt="Edad"
+        app:layout_constraintEnd_toStartOf="@id/spinnerCategory"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView" />
 
-<!--    <Spinner-->
-<!--        android:id="@+id/spinnerCategoria"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toEndOf="@id/spinnerEdad"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/searchView"-->
-<!--        android:layout_width="130dp"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:prompt="Categoría"-->
-<!--        tools:layout_editor_absoluteX="156dp"-->
-<!--        tools:layout_editor_absoluteY="129dp"-->
-<!--        tools:ignore="UnknownId" />-->
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="124dp"
+        android:prompt="Categoría"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView" />
 
-<!--    <Button-->
-<!--        android:id="@+id/btnBuscar"-->
-<!--        android:layout_width="99dp"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:text="Buscar"-->
-<!--        android:textColorLink="#3F51B5"-->
-<!--        tools:layout_editor_absoluteX="296dp"-->
-<!--        tools:layout_editor_absoluteY="69dp"-->
-<!--        tools:ignore="MissingConstraints" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/btnBuscar2"-->
-<!--        android:layout_width="99dp"-->
-<!--        android:layout_height="40dp"-->
-<!--        android:text="Buscar"-->
-<!--        android:textColorLink="#3F51B5"-->
-<!--        tools:layout_editor_absoluteX="296dp"-->
-<!--        tools:layout_editor_absoluteY="129dp"-->
-<!--        tools:ignore="MissingConstraints" />-->
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:layout_width="380dp"-->
-<!--        android:layout_height="498dp"-->
-<!--        tools:layout_editor_absoluteX="15dp"-->
-<!--        tools:layout_editor_absoluteY="184dp"-->
-<!--        tools:ignore="MissingConstraints" />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="380dp"
+        android:layout_height="498dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="184dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
