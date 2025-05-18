@@ -48,6 +48,7 @@ dependencies {
     implementation("com.firebaseui:firebase-ui-auth:9.0.0")
     implementation("com.firebaseui:firebase-ui-firestore:9.0.0")
     implementation ("com.google.android.material:material:1.11.0")
+    implementation ("com.google.android.gms:play-services-location:21.3.0")
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
     implementation(libs.navigation.fragment)

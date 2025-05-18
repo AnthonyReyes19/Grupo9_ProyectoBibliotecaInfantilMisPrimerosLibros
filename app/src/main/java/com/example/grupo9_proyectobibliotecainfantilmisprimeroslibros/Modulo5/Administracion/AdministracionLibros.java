@@ -36,7 +36,7 @@ public class AdministracionLibros extends AppCompatActivity {
         FirestoreRecyclerOptions<Libros> firestoreRecyclerOptions =
                 new FirestoreRecyclerOptions.Builder<Libros>().setQuery(query, Libros.class).build() ;
 
-        mAdapter = new LibrosAdapter(firestoreRecyclerOptions);
+        mAdapter = new LibrosAdapter(firestoreRecyclerOptions, this);
         mAdapter.notifyDataSetChanged();
         mRecycler.setAdapter(mAdapter);
 
