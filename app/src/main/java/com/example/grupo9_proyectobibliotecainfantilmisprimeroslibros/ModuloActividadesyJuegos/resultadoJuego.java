@@ -50,7 +50,7 @@ public class resultadoJuego extends AppCompatActivity {
         ref.push().setValue(resultado);
     }
     public void regresar(View v){
-        Intent ventanaRegistro = new Intent(this, loginPrincipalModuloReyes.class);
+        Intent ventanaRegistro = new Intent(this, menuPrincipalModuloReyes.class);
         startActivity(ventanaRegistro);
     }
     public void otroJuego(View v){

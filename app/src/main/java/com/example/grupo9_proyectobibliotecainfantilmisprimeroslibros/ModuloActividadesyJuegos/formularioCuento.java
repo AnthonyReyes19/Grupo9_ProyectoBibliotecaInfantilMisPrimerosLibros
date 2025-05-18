@@ -177,7 +177,7 @@ public class formularioCuento extends AppCompatActivity {
         nivel.setRating(0f);
     }
     public void regresar(View v){
-        Intent ventanaLogin = new Intent(this, loginPrincipalModuloReyes.class);
+        Intent ventanaLogin = new Intent(this, menuPrincipalModuloReyes.class);
         startActivity(ventanaLogin);
     }
     public void consultarDatos(View v){

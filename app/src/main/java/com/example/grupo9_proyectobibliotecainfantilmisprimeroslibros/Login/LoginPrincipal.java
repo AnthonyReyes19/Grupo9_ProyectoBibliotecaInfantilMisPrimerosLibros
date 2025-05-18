@@ -1,18 +1,14 @@
 package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Login;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -21,14 +17,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.MainActivity;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.RegistrarPadresYEducadores;
-import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos.loginPrincipalModuloReyes;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.RegistrarPerfilInfantilActivity;
-import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.RegistroPerfilInfantil;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

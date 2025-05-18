@@ -1,34 +1,22 @@
 package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Login.LoginPrincipal;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.AdminPanelActivity;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloPadresYEducadores.MenudelmoduloPadresEducadores;
-import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos.loginPrincipalModuloReyes;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos.menuPrincipalModuloReyes;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -84,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(ventana);
             finish();
         } else if (title.equals("Actividades y Juegos")) {
-            Intent ventana = new Intent(this, loginPrincipalModuloReyes.class);
+            Intent ventana = new Intent(this, menuPrincipalModuloReyes.class);
             startActivity(ventana);
         } else if(title.equals("Padres y Educadores")){
             Intent ventana = new Intent(this, MenudelmoduloPadresEducadores.class);

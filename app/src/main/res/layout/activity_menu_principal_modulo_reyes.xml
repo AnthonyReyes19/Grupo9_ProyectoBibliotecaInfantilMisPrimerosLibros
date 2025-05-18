@@ -6,7 +6,7 @@
     android:background="@drawable/login_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ModuloActividadesyJuegos.loginPrincipalModuloReyes">
+    tools:context=".ModuloActividadesyJuegos.menuPrincipalModuloReyes">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/Menu"

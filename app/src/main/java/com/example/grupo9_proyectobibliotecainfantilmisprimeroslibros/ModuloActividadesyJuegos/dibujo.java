@@ -100,7 +100,7 @@ public class dibujo extends AppCompatActivity {
     }
 
     public void regresar(View v){
-        Intent menu = new Intent(this, loginPrincipalModuloReyes.class);
+        Intent menu = new Intent(this, menuPrincipalModuloReyes.class);
         startActivity(menu);
     }
 }

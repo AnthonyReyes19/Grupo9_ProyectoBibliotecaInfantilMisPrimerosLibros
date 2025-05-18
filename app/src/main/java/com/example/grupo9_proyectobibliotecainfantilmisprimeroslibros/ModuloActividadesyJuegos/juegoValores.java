@@ -32,7 +32,7 @@ public class juegoValores extends AppCompatActivity {
     };
     String[][] opciones = {
             {"Respeto", "Solidaridad", "Empatía"},
-            {"Solidaridad", "Perseverancia", "Amistad"},
+            {"Perseverancia", "Solidaridad", "Amistad"},
             {"Empatía", "Honestidad", "Respeto"}
     };
     int[] respuestas = {0, 0, 0}; // índice de la respuesta correcta

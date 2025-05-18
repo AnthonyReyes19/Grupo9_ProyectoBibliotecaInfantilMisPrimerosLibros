@@ -13,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.MainActivity;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
-public class loginPrincipalModuloReyes extends AppCompatActivity {
+public class menuPrincipalModuloReyes extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +44,6 @@ public class loginPrincipalModuloReyes extends AppCompatActivity {
     public void verDibujo(View v){
         Intent intent = new Intent(this, dibujo.class);
         startActivity(intent);
-    }
-    public void registrarDibujo(View v){
-        Intent ventanaRegistrarCuento = new Intent(this, formularioCuento.class);
-        startActivity(ventanaRegistrarCuento);
     }
 
     public void regresar(View v){

@@ -42,7 +42,7 @@ public class emocional extends AppCompatActivity {
         });
 
         btnVolver.setOnClickListener(v -> {
-            Intent intent = new Intent(this, loginPrincipalModuloReyes.class);
+            Intent intent = new Intent(this, menuPrincipalModuloReyes.class);
             startActivity(intent);
             finish();
         });

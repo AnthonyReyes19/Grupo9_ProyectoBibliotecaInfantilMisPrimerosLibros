@@ -22,14 +22,20 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="406dp"
-        android:layout_height="142dp"
+        android:layout_width="404dp"
+        android:layout_height="161dp"
         android:layout_marginTop="216dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Escriba el titulo del cuento que desee verificar su existencia:" />
 
         <EditText
             android:id="@+id/cons_txtTitulo"

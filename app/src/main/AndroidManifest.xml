@@ -40,7 +40,7 @@
             android:name=".ModuloActividadesyJuegos.VerCuento"
             android:exported="false" />
         <activity
-            android:name=".ModuloActividadesyJuegos.loginPrincipalModuloReyes"
+            android:name=".ModuloActividadesyJuegos.menuPrincipalModuloReyes"
             android:exported="false" />
         <activity
             android:name=".ModuloActividadesyJuegos.consultarDatos"
@@ -54,6 +54,11 @@
         <activity
             android:name=".ModuloActividadesyJuegos.verCuentoUnoPaginados"
             android:exported="false" />
+        <activity android:name=".ModuloActividadesyJuegos.dibujo"
+            android:exported="false" />
+        <activity android:name=".ModuloActividadesyJuegos.emocional"
+            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="false"
