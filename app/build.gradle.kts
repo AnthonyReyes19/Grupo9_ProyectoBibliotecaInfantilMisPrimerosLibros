@@ -7,7 +7,9 @@ plugins {
 android {
     namespace = "com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros"
     compileSdk = 35
-
+    buildFeatures {
+        viewBinding = true
+    }
     defaultConfig {
         applicationId = "com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros"
         minSdk = 26
@@ -54,4 +56,5 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.google.firebase:firebase-database")
+    implementation ("androidx.cardview:cardview:1.0.0")
 }

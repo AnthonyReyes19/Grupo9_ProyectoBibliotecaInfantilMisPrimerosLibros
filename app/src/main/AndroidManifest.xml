@@ -81,8 +81,11 @@
             android:name=".RegistrarPerfilInfantilActivity"
             android:exported="true" />
         <activity android:name=".ListarPerfilesInfantilesActivity" />
-        <activity android:name=".EditarPerfilActivity" />
+        <activity android:name=".EditarPerfilInfantilActivity" />
         <activity android:name=".ConsultarPerfilActivity" />
+        <activity
+            android:name=".MenuPerfilInfantilActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
