@@ -58,7 +58,26 @@
             android:exported="false" />
         <activity android:name=".ModuloActividadesyJuegos.emocional"
             android:exported="false" />
-
+        <activity android:name=".MenuPerfilInfantilActivity"
+            android:exported="false" />
+        <activity android:name=".MiPerfilActivity"
+            android:exported="false" />
+        <activity android:name=".ConsultarPerfilActivity"
+            android:exported="false" />
+        <activity android:name=".EditarPerfilInfantilActivity"
+            android:exported="false" />
+        <activity android:name=".ListarPerfilesInfantilesActivity"
+            android:exported="false" />
+        <activity android:name=".ModuloPadresYEducadores.ControlParental"
+            android:exported="false" />
+        <activity android:name=".ModuloPadresYEducadores.MenudelmoduloPadresEducadores"
+            android:exported="false" />
+        <activity android:name=".ModuloPadresYEducadores.ReportesParaPadres"
+            android:exported="false" />
+        <activity android:name=".Modulo5.Administracion.AdministracionLibros"
+            android:exported="false" />
+        <activity android:name=".Modulo5.Administracion.SubirLibro"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
