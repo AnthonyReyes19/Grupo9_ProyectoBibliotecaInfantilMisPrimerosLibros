@@ -1,4 +1,5 @@
 package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros;
+import com.google.firebase.auth.FirebaseAuth;
 
 import android.content.Context;
 import android.content.Intent;
@@ -50,7 +51,9 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.PerfilView
         });
 
         holder.btnEliminar.setOnClickListener(v -> {
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             FirebaseDatabase.getInstance().getReference("perfiles")
+                    .child(userId)
                     .child(item.key)
                     .removeValue()
                     .addOnSuccessListener(aVoid -> {

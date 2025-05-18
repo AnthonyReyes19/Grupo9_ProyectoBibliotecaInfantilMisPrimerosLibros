@@ -89,14 +89,9 @@ public class RegistrarPerfilInfantilActivity extends AppCompatActivity {
         if (cbAnimales.isChecked()) intereses.add("Animales");
 
         RegistroPerfilInfantil perfil = new RegistroPerfilInfantil(nombre, edad, selectedAvatar, intereses);
-        DatabaseReference newRef = dbRef.push();
-        String perfilId = newRef.getKey();
 
-        newRef.setValue(perfil)
+        dbRef.setValue(perfil)
                 .addOnSuccessListener(aVoid -> {
-                    SharedPreferences prefs = getSharedPreferences("perfilPrefs", MODE_PRIVATE);
-                    prefs.edit().putString("perfilId", perfilId).apply();
-
                     Toast.makeText(this, "Perfil guardado correctamente", Toast.LENGTH_SHORT).show();
                     finish();
                 })

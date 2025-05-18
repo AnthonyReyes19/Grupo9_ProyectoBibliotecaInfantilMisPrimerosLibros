@@ -2,6 +2,8 @@ package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros;
 
 import android.os.Bundle;
 import android.widget.Toast;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,38 +26,37 @@ public class ConsultarPerfilActivity extends AppCompatActivity {
     private List<PerfilItem> listaPerfiles;
     private DatabaseReference dbRef;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consultar_perfiles);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_consultar_perfiles);
 
-        recyclerView = findViewById(R.id.recyclerViewPerfiles);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView = findViewById(R.id.recyclerViewPerfiles);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        listaPerfiles = new ArrayList<>();
-        adapter = new PerfilAdapter(listaPerfiles, this);
-        recyclerView.setAdapter(adapter);
+            listaPerfiles = new ArrayList<>();
+            adapter = new PerfilAdapter(listaPerfiles, this);
+            recyclerView.setAdapter(adapter);
 
-        dbRef = FirebaseDatabase.getInstance().getReference("perfiles");
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        dbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listaPerfiles.clear();
-                for (DataSnapshot perfilSnapshot : snapshot.getChildren()) {
-                    RegistroPerfilInfantil perfil = perfilSnapshot.getValue(RegistroPerfilInfantil.class);
-                    String key = perfilSnapshot.getKey();
-                    if (perfil != null && key != null) {
-                        listaPerfiles.add(new PerfilItem(key, perfil));
+            dbRef = FirebaseDatabase.getInstance().getReference("perfiles").child(userId);
+
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    listaPerfiles.clear();
+                    RegistroPerfilInfantil perfil = snapshot.getValue(RegistroPerfilInfantil.class);
+                    if (perfil != null) {
+                        listaPerfiles.add(new PerfilItem(userId, perfil));
                     }
+                    adapter.notifyDataSetChanged();
                 }
-                adapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(ConsultarPerfilActivity.this, "Error al cargar datos", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(ConsultarPerfilActivity.this, "Error al cargar datos", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 }
