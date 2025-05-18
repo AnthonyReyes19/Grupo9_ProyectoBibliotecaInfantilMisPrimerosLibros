@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main"
     android:background="#F5F5F5"
-    tools:context=".Modulo5.Administracion.AdminPanelActivity">
+    tools:context=".ModuloPadresYEducadores.MenudelmoduloPadresEducadores">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Opciones de Administracion"
+            android:text="Modulo Padres/Educadores "
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"/>
@@ -33,7 +33,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:text="Opciones"
+        android:text="Bienvenido al panel de control para padres y educadores"
         android:textAlignment="center"
         android:textColor="#333333"
         android:textSize="18sp"
@@ -49,7 +49,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="Ofrecemos administrar el contenido de los libros y administrar los perfiles"
+        android:text="Aquí podrá monitorear y controlar la actividad del niño en la aplicación"
         android:textAlignment="center"
         android:textColor="#666666"
         android:textSize="14sp"
@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvBienvenida" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardRegistrarLibros"
+        android:id="@+id/cardReportes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -77,14 +77,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="NuevoLibro"
             android:orientation="horizontal"
             android:padding="16dp">
 
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/book_logo"
+                android:src="@android:drawable/ic_menu_recent_history"
                 android:tint="@color/purpura"
                 tools:ignore="UseAppTint" />
 
@@ -97,7 +96,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Registrar Libros"
+                    android:text="Reportes de Actividad"
                     android:textColor="#333333"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -106,7 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Registrar los libros que seran mostrados a los usuarios de la aplicacion"
+                    android:text="Ver informes detallados sobre lectura y actividades realizadas"
                     android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -114,7 +113,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardAdministrarLibros"
+        android:id="@+id/cardControlParental"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -128,19 +127,19 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardRegistrarLibros">
+        app:layout_constraintTop_toBottomOf="@+id/cardReportes">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="AdministrarLibro"
+            android:onClick="controlParental"
             android:orientation="horizontal"
             android:padding="16dp">
 
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/gestionar"
+                android:src="@android:drawable/ic_lock_lock"
                 android:tint="@color/purpura"
                 tools:ignore="UseAppTint" />
 
@@ -153,7 +152,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Administrar Libros"
+                    android:text="Control Parental"
                     android:textColor="#333333"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -162,7 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Ver, modificar y Eliminar Libros registrados"
+                    android:text="Administrar ajustes de control parental y contraseña"
                     android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -170,7 +169,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardGestionarPerfiles"
+        android:id="@+id/cardLimiteUso"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -184,7 +183,7 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardAdministrarLibros">
+        app:layout_constraintTop_toBottomOf="@+id/cardControlParental">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -195,7 +194,7 @@
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/gestionarperfiles"
+                android:src="@android:drawable/ic_menu_today"
                 android:tint="@color/purpura"
                 tools:ignore="UseAppTint" />
 
@@ -208,7 +207,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Gestionar Perfiles"
+                    android:text="Límites de Uso Diario"
                     android:textColor="#333333"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -217,13 +216,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Gestiona los perfiles creados por los usuarios del sistema"
+                    android:text="Configurar tiempo máximo de uso diario para la aplicación"
                     android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 
     <Button
         android:id="@+id/btnRegresar"
@@ -233,7 +231,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/rouned_corner"
-        android:onClick="RegresarAdminAMain"
+        android:onClick="regresarMain"
         android:text="Regresar"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -8,10 +8,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import android.content.SharedPreferences;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Bundle;
@@ -33,7 +34,11 @@ public class RegistrarPerfilInfantilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_perfil_infantil);
 
-        dbRef = FirebaseDatabase.getInstance().getReference("perfiles");
+        //dbRef = FirebaseDatabase.getInstance().getReference("perfiles");
+        FirebaseUser usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = usuarioActual.getUid();
+        dbRef = FirebaseDatabase.getInstance().getReference("perfiles").child(userId);
+
 
         editNombre = findViewById(R.id.editNombre);
         editEdad = findViewById(R.id.editEdad);
@@ -85,8 +90,13 @@ public class RegistrarPerfilInfantilActivity extends AppCompatActivity {
 
         RegistroPerfilInfantil perfil = new RegistroPerfilInfantil(nombre, edad, selectedAvatar, intereses);
 
-        dbRef.push().setValue(perfil)
-                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Perfil guardado correctamente", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(this, "Error al guardar: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        dbRef.setValue(perfil)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Perfil guardado correctamente", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Error al guardar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 }

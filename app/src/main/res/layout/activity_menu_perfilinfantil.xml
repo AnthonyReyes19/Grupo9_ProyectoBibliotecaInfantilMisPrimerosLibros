@@ -2,29 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5"
-    tools:context=".Modulo5.Administracion.AdminPanelActivity">
+    tools:context=".MenuPerfilInfantilActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/login_background"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Opciones de Administracion"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-    </androidx.appcompat.widget.Toolbar>
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Gestión de Perfil Infantil" />
 
     <TextView
         android:id="@+id/tvBienvenida"
@@ -33,7 +27,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:text="Opciones"
+        android:text="Opciones de gestión del perfil infantil"
         android:textAlignment="center"
         android:textColor="#333333"
         android:textSize="18sp"
@@ -41,24 +35,63 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <TextView
-        android:id="@+id/tvDescripcion"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardRegistrarPerfil"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Ofrecemos administrar el contenido de los libros y administrar los perfiles"
-        android:textAlignment="center"
-        android:textColor="#666666"
-        android:textSize="14sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvBienvenida" />
+        app:layout_constraintTop_toBottomOf="@+id/cardEliminarPerfil">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_input_add"
+                android:tint="@android:color/holo_purple"
+                tools:ignore="UseAppTint" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Registrar nuevo perfil"
+                    android:textColor="#333333"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Crear un nuevo perfil infantil vinculado a esta cuenta"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardRegistrarLibros"
+        android:id="@+id/cardVerPerfil"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -72,20 +105,19 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescripcion">
+        app:layout_constraintTop_toBottomOf="@+id/tvBienvenida">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="NuevoLibro"
             android:orientation="horizontal"
             android:padding="16dp">
 
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/book_logo"
-                android:tint="@color/purpura"
+                android:src="@android:drawable/ic_menu_view"
+                android:tint="@android:color/holo_purple"
                 tools:ignore="UseAppTint" />
 
             <LinearLayout
@@ -97,7 +129,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Registrar Libros"
+                    android:text="Ver mi perfil"
                     android:textColor="#333333"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -106,7 +138,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Registrar los libros que seran mostrados a los usuarios de la aplicacion"
+                    android:text="Visualizar los datos del perfil infantil"
                     android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -114,7 +146,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardAdministrarLibros"
+        android:id="@+id/cardEditarPerfil"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -128,20 +160,19 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardRegistrarLibros">
+        app:layout_constraintTop_toBottomOf="@+id/cardVerPerfil">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="AdministrarLibro"
             android:orientation="horizontal"
             android:padding="16dp">
 
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/gestionar"
-                android:tint="@color/purpura"
+                android:src="@android:drawable/ic_menu_edit"
+                android:tint="@android:color/holo_purple"
                 tools:ignore="UseAppTint" />
 
             <LinearLayout
@@ -153,7 +184,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Administrar Libros"
+                    android:text="Editar mi perfil"
                     android:textColor="#333333"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -162,7 +193,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Ver, modificar y Eliminar Libros registrados"
+                    android:text="Modificar datos del perfil infantil"
                     android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -170,7 +201,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardGestionarPerfiles"
+        android:id="@+id/cardEliminarPerfil"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -184,7 +215,7 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardAdministrarLibros">
+        app:layout_constraintTop_toBottomOf="@+id/cardEditarPerfil">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -195,8 +226,8 @@
             <ImageView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/gestionarperfiles"
-                android:tint="@color/purpura"
+                android:src="@android:drawable/ic_menu_delete"
+                android:tint="@android:color/holo_purple"
                 tools:ignore="UseAppTint" />
 
             <LinearLayout
@@ -208,7 +239,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Gestionar Perfiles"
+                    android:text="Eliminar perfil"
                     android:textColor="#333333"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -217,27 +248,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Gestiona los perfiles creados por los usuarios del sistema"
+                    android:text="Eliminar permanentemente este perfil infantil"
                     android:textColor="#666666"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-
-    <Button
-        android:id="@+id/btnRegresar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/rouned_corner"
-        android:onClick="RegresarAdminAMain"
-        android:text="Regresar"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

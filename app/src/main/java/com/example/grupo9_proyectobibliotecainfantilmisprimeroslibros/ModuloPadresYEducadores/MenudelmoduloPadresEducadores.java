@@ -1,4 +1,4 @@
-package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion;
+package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloPadresYEducadores;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,23 +12,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.MainActivity;
-import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos.loginPrincipalModuloReyes;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
-public class AdminPanelActivity extends AppCompatActivity {
-
-
-
+public class MenudelmoduloPadresEducadores extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_admin_panel);
+        setContentView(R.layout.activity_menudelmodulo_padres_educadores);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -37,19 +34,13 @@ public class AdminPanelActivity extends AppCompatActivity {
         });
     }
 
-    public void RegresarAdminAMain(View v){
+    public void regresarMain(View v){
         Intent ventana = new Intent(this, MainActivity.class);
         startActivity(ventana);
     }
 
-    public void NuevoLibro(View v){
-        Intent ventana = new Intent(this, SubirLibro.class);
+    public void controlParental(View v){
+        Intent ventana = new Intent(this, ControlParental.class);
         startActivity(ventana);
     }
-
-    public void AdministrarLibro(View v){
-        Intent ventana = new Intent(this, AdministracionLibros.class);
-        startActivity(ventana);
-    }
-
 }

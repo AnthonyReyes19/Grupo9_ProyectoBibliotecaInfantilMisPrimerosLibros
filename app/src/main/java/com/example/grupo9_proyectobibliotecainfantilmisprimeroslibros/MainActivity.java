@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Login.LoginPrincipal;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.AdminPanelActivity;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloPadresYEducadores.MenudelmoduloPadresEducadores;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
 import androidx.activity.EdgeToEdge;
@@ -59,12 +60,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_Inicio);
         }
-
-
-
-
-
-
     }
 
     @Override
@@ -91,11 +86,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (title.equals("Actividades y Juegos")) {
             Intent ventana = new Intent(this, loginPrincipalModuloReyes.class);
             startActivity(ventana);
+        } else if(title.equals("Padres y Educadores")){
+            Intent ventana = new Intent(this, MenudelmoduloPadresEducadores.class);
+            startActivity(ventana);
+        }   else if(title.equals("Usuario y Perfil Infantil")) {
+            Intent ventana = new Intent(this, MenuPerfilInfantilActivity.class);
+            startActivity(ventana);
         }
-
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     @Override
     public void onBackPressed(){
@@ -105,5 +106,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 }

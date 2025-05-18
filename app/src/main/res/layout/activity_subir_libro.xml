@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/login_background"
+    android:id="@+id/main"
+    android:layout_height="match_parent"
+    tools:context=".Modulo5.Administracion.SubirLibro">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:text="Titulo" />
+
+            <EditText
+                android:id="@+id/etTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rouned_corner"
+                android:layout_marginBottom="12dp"
+                android:paddingLeft="16dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFDFD"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="match_parent"
+                android:textColor="#FFFFFF"
+                android:layout_height="wrap_content"
+                android:text="Categoria (Ej. Valores, animales...)"
+                />
+
+            <EditText
+                android:id="@+id/etCategoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rouned_corner"
+                android:layout_marginBottom="12dp"
+                android:paddingLeft="16dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFDFD"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="match_parent"
+                android:textColor="#FFFFFF"
+                android:layout_height="wrap_content"
+                android:text="Edad recomendada (Ej. 3-5)" />
+
+            <EditText
+                android:id="@+id/etEdad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rouned_corner"
+                android:inputType="number"
+                android:layout_marginBottom="12dp"
+                android:paddingLeft="16dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFDFD"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgPortada"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:background="#CCCCCC"
+                android:scaleType="centerCrop" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <Button
+                android:id="@+id/btnSeleccionarImagen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seleccionar portada"
+                android:textColor="#3b84F1"
+                android:textSize="16sp"
+                android:backgroundTint="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnSeleccionarPdf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Seleccionar archivo PDF"
+                android:textColor="#3b84F1"
+                android:textSize="16sp"
+                android:backgroundTint="@color/white"/>
+
+            <Button
+                android:id="@+id/btnSubir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Subir libro"
+                android:textColor="#3b84F1"
+                android:textSize="16sp"
+                android:backgroundTint="@color/white"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
