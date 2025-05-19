@@ -70,7 +70,7 @@ public class juegoValores extends AppCompatActivity {
         });
     }
 
-    void cargarPregunta() {
+    public void cargarPregunta() {
         txtPregunta.setText(preguntas[preguntaActual]);
         imgSituacion.setImageResource(imagenes[preguntaActual]);
 
@@ -81,7 +81,7 @@ public class juegoValores extends AppCompatActivity {
         opcionValores.clearCheck();
     }
 
-    void mostrarResultado() {
+    public void mostrarResultado() {
         Intent intent = new Intent(this, resultadoJuego.class);
         intent.putExtra("aciertos", respuestasCorrectas);
         intent.putExtra("total", preguntas.length);

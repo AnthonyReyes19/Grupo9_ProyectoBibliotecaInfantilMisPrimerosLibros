@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 
-public class emocional extends AppCompatActivity {
+public class juegoEmocional extends AppCompatActivity {
 
     ImageView imgFeliz, imgTriste, imgEnojado;
     Button btnRepetir, btnVolver;

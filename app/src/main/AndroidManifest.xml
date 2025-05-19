@@ -25,20 +25,16 @@
             android:name=".ModuloPadresYEducadores.ReportesParaPadres"
             android:exported="false" />
         <activity
-            android:name=".ModuloPadresYEducadores.Reportes"
-            android:exported="false"
-            android:theme="@style/Theme.Grupo9_ProyectoBibliotecaInfantilMisPrimerosLibros" />
-        <activity
             android:name=".ModuloPadresYEducadores.MenudelmoduloPadresEducadores"
             android:exported="false" />
         <activity
             android:name=".Modulo5.Administracion.SubirLibro"
             android:exported="false" />
         <activity
-            android:name=".resultadoJuego"
+            android:name=".ModuloActividadesyJuegos.resultadoJuego"
             android:exported="false" />
         <activity
-            android:name=".juegoValores"
+            android:name=".ModuloActividadesyJuegos.juegoValores"
             android:exported="false" />
         <activity
             android:name=".Modulo5.Administracion.RegistrarPadresYEducadores"
@@ -59,10 +55,10 @@
             android:name=".ModuloActividadesyJuegos.VerCuento"
             android:exported="false" />
         <activity
-            android:name=".ModuloActividadesyJuegos.loginPrincipalModuloReyes"
+            android:name=".ModuloActividadesyJuegos.menuPrincipalModuloReyes"
             android:exported="false" />
         <activity
-            android:name=".ModuloActividadesyJuegos.consultarUsuario"
+            android:name=".ModuloActividadesyJuegos.consultarDatos"
             android:exported="false" />
         <activity
             android:name=".ModuloActividadesyJuegos.formularioCuento"

@@ -88,12 +88,6 @@ public class formularioCuento extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Hubo error al guardar los datos en el SD", Toast.LENGTH_SHORT).show();
             }
-            //Para guardar en la BD
-            //if(guardarBD(titulo.getText().toString(), autor.getText().toString(), nivel.getRating())){
-            //    Toast.makeText(this, "Datos guardados en BD correctamente", Toast.LENGTH_LONG).show();
-            //} else{
-            //    Toast.makeText(this,"Hubo error en BD", Toast.LENGTH_LONG).show();
-            //}
         String valorSeleccionado = ensenar.getSelectedItem().toString();
         String edadSeleccionada = edades.getSelectedItem().toString();
 
@@ -108,26 +102,6 @@ public class formularioCuento extends AppCompatActivity {
 
     }
 
-    //public boolean guardarBD(String titulo, String autor, float rating){
-    //    BDOpenHelper BDProyecto = new BDOpenHelper(this);
-    //    final SQLiteDatabase BDProyectoEdit = BDProyecto.getWritableDatabase();
-
-    //    if(BDProyectoEdit != null){
-    //        ContentValues cv = new ContentValues();
-    //        cv.put("titulo", titulo);
-    //        cv.put("autor", autor);
-    //        cv.put("ratingNivel", rating);
-
-    //        BDProyectoEdit.insert("cuento",null, cv);
-    //        //BDProyectoEdit.close();
-    //        return true;
-
-    //    }else{
-    //        //BDProyectoEdit.close();
-    //        return false;
-
-    //    }
-    //}
     public void guardarEnFirebase(String titulo, String autor, float rating, String valor, String edad){
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
         String id = dbRef.push().getKey(); // genera un ID único

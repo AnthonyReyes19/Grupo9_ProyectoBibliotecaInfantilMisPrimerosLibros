@@ -54,7 +54,7 @@ public class resultadoJuego extends AppCompatActivity {
         startActivity(ventanaRegistro);
     }
     public void otroJuego(View v){
-        Intent intent = new Intent(this, emocional.class);
+        Intent intent = new Intent(this, juegoEmocional.class);
         startActivity(intent);
     }
 }
