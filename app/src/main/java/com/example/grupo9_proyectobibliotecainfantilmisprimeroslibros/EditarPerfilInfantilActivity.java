@@ -100,23 +100,24 @@ public class EditarPerfilInfantilActivity extends AppCompatActivity {
         avatarOption3.setAlpha(0.5f);
 
         // Verifica si selectedAvatar es nulo antes de usarlo
-        if (selectedAvatar == null) {
-            // Establece un valor predeterminado o simplemente retorna
-            selectedAvatar = "avatar1"; // valor predeterminado
+        if (selectedAvatar == null || selectedAvatar.isEmpty()) {
+            // Establece un valor predeterminado y destaca el primer avatar
+            selectedAvatar = "avatar1";
             avatarOption1.setAlpha(1.0f);
             return;
         }
 
-        switch (selectedAvatar) {
-            case "avatar1":
-                avatarOption1.setAlpha(1.0f);
-                break;
-            case "avatar2":
-                avatarOption2.setAlpha(1.0f);
-                break;
-            case "avatar3":
-                avatarOption3.setAlpha(1.0f);
-                break;
+        // Usar un switch seguro
+        if ("avatar1".equals(selectedAvatar)) {
+            avatarOption1.setAlpha(1.0f);
+        } else if ("avatar2".equals(selectedAvatar)) {
+            avatarOption2.setAlpha(1.0f);
+        } else if ("avatar3".equals(selectedAvatar)) {
+            avatarOption3.setAlpha(1.0f);
+        } else {
+            // Si el valor no coincide con ninguno, establecer un valor predeterminado
+            selectedAvatar = "avatar1";
+            avatarOption1.setAlpha(1.0f);
         }
     }
 

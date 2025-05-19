@@ -37,6 +37,9 @@
             android:name=".ModuloActividadesyJuegos.juegoValores"
             android:exported="false" />
         <activity
+            android:name=".SeleccionarPerfil"
+            android:exported="false" />
+        <activity
             android:name=".Modulo5.Administracion.RegistrarPadresYEducadores"
             android:exported="false" />
         <activity

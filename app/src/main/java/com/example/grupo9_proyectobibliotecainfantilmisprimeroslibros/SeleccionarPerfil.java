@@ -80,30 +80,51 @@ public class SeleccionarPerfil extends AppCompatActivity {
 
                 for (DataSnapshot perfilSnapshot : dataSnapshot.getChildren()) {
                     try {
-                        // Verificar si el hijo es un objeto (perfil) o un valor primitivo
-                        if (perfilSnapshot.hasChildren()) {
-                            RegistroPerfilInfantil perfil = perfilSnapshot.getValue(RegistroPerfilInfantil.class);
-                            if (perfil != null) {
-                                perfil.setId(perfilSnapshot.getKey());
-                                perfilesInfantiles.add(perfil);
-                                agregarVistaPerfilInfantil(perfil);
+                        // Verificar si el perfil tiene la estructura esperada
+                        if (perfilSnapshot.hasChild("nombre") && perfilSnapshot.hasChild("edad") && perfilSnapshot.hasChild("avatar")) {
+                            // Extraer los datos del perfil
+                            String nombre = perfilSnapshot.child("nombre").getValue(String.class);
+                            Object edadObj = perfilSnapshot.child("edad").getValue();
+                            int edad = 0;
+                            if (edadObj instanceof Long) {
+                                edad = ((Long) edadObj).intValue();
+                            } else if (edadObj instanceof Integer) {
+                                edad = (Integer) edadObj;
+                            } else if (edadObj instanceof String) {
+                                try {
+                                    edad = Integer.parseInt((String) edadObj);
+                                } catch (NumberFormatException e) {
+                                    edad = 0;
+                                }
                             }
-                        } else {
-                            // Si es un valor primitivo, crear un perfil básico
-                            String nombrePerfil = perfilSnapshot.getValue(String.class);
-                            if (nombrePerfil != null) {
-                                RegistroPerfilInfantil perfil = new RegistroPerfilInfantil();
-                                perfil.setId(perfilSnapshot.getKey());
-                                perfil.setNombre(nombrePerfil);
-                                perfil.setEdad(5); // Edad por defecto
-                                perfil.setAvatar("avatar1"); // Avatar por defecto
-                                perfil.setIntereses(new ArrayList<>());
-                                perfilesInfantiles.add(perfil);
-                                agregarVistaPerfilInfantil(perfil);
+
+                            String avatar = perfilSnapshot.child("avatar").getValue(String.class);
+                            if (avatar == null) {
+                                avatar = "avatar1";
                             }
+
+                            // Extraer intereses si existen
+                            List<String> intereses = new ArrayList<>();
+                            if (perfilSnapshot.hasChild("intereses")) {
+                                DataSnapshot interesesSnapshot = perfilSnapshot.child("intereses");
+                                // Verificar si intereses es una lista en Firebase
+                                if (interesesSnapshot.getValue() instanceof List) {
+                                    for (DataSnapshot interesSnapshot : interesesSnapshot.getChildren()) {
+                                        String interes = interesSnapshot.getValue(String.class);
+                                        if (interes != null) {
+                                            intereses.add(interes);
+                                        }
+                                    }
+                                }
+                            }
+
+                            // Crear el perfil y agregarlo a la lista
+                            RegistroPerfilInfantil perfil = new RegistroPerfilInfantil(nombre, edad, avatar, intereses);
+                            perfil.setId(perfilSnapshot.getKey());
+                            perfilesInfantiles.add(perfil);
+                            agregarVistaPerfilInfantil(perfil);
                         }
                     } catch (Exception e) {
-                        // Log del error pero continúa procesando otros perfiles
                         e.printStackTrace();
                         Toast.makeText(SeleccionarPerfil.this,
                                 "Error al cargar un perfil: " + e.getMessage(),
@@ -132,6 +153,7 @@ public class SeleccionarPerfil extends AppCompatActivity {
         ImageView imageAvatar = perfilView.findViewById(R.id.imageAvatar);
         TextView textNombre = perfilView.findViewById(R.id.textNombre);
         TextView textEdad = perfilView.findViewById(R.id.textEdad);
+        //TextView textIntereses = perfilView.findViewById(R.id.txtI);
         Button btnSeleccionar = perfilView.findViewById(R.id.btnSeleccionar);
 
         // Configurar avatar
@@ -140,6 +162,13 @@ public class SeleccionarPerfil extends AppCompatActivity {
 
         textNombre.setText(perfil.getNombre());
         textEdad.setText(perfil.getEdad() + " años");
+
+        // Formatear intereses
+//        if (perfil.getIntereses() != null && !perfil.getIntereses().isEmpty()) {
+//            textIntereses.setText(android.text.TextUtils.join(", ", perfil.getIntereses()));
+//        } else {
+//            textIntereses.setText("Sin intereses");
+//        }
 
         btnSeleccionar.setOnClickListener(v -> {
             // Guardar perfil seleccionado y tipo de usuario
