@@ -22,7 +22,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-//import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloActividadesyJuegos.loginPrincipalModuloReyes;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.databinding.ActivityMenuPrincipalModuloReyesBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -126,13 +125,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String avatarInfantil = sharedPreferences.getString("perfil_infantil_avatar", "");
         int edadInfantil = sharedPreferences.getInt("perfil_infantil_edad", 0);
 
-        // Mostrar saludo personalizado
+
         TextView saludoPersonalizado = findViewById(R.id.textSaludo);
         if (saludoPersonalizado != null) {
             saludoPersonalizado.setText("¡Hola " + nombreInfantil + "!");
         }
+        TextView nombretxt = findViewById(R.id.textNombreUsuario);
+        if(nombretxt != null) {
+            nombretxt.setText(nombreInfantil);
+        }
 
-        // Configurar avatar en la interfaz
+
         ImageView avatarUsuario = findViewById(R.id.imageAvatarUsuario);
         if (avatarUsuario != null) {
             int avatarResId = getAvatarResource(avatarInfantil);
@@ -164,8 +167,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void mostrarContenidoPorEdad(int edad) {
-        // Lógica para mostrar contenido apropiado según la edad
-        // Por ejemplo, libros más simples para niños más pequeños
+
     }
 
     private int getAvatarResource(String avatarName) {
@@ -181,7 +183,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    // Método para cambiar de perfil (agregar a un botón en la interfaz)
     private void cambiarPerfil() {
         SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
