@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -17,6 +18,33 @@
         tools:targetApi="31">
         <activity
             android:name=".Modulo5.Administracion.EditarUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".ModuloActividadesyJuegos.juegoEmocional"
+            android:exported="false" />
+        <activity
+            android:name=".ModuloActividadesyJuegos.dibujo"
+            android:exported="false" />
+        <activity
+            android:name=".MiPerfilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SeleccionarPerfil"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrarPerfilInfantilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListarPerfilesInfantilesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConsultarPerfilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuPerfilInfantilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditarPerfilInfantilActivity"
             android:exported="false" />
         <activity
             android:name=".Modulo5.Administracion.GestionUsuarios"
@@ -41,9 +69,6 @@
             android:exported="false" />
         <activity
             android:name=".ModuloActividadesyJuegos.juegoValores"
-            android:exported="false" />
-        <activity
-            android:name=".SeleccionarPerfil"
             android:exported="false" />
         <activity
             android:name=".Modulo5.Administracion.RegistrarPadresYEducadores"
@@ -82,17 +107,8 @@
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".RegistrarPerfilInfantilActivity"
-            android:exported="true" />
-        <activity android:name=".ListarPerfilesInfantilesActivity" />
-        <activity android:name=".EditarPerfilInfantilActivity" />
-        <activity android:name=".ConsultarPerfilActivity" />
         <activity android:name=".ModuloCatalogoLectura.CatalogoYLectura" />
         <activity android:name=".ModuloCatalogoLectura.LecturaLibros.LecturaLibroActivity" />
-        <activity
-            android:name=".MenuPerfilInfantilActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
