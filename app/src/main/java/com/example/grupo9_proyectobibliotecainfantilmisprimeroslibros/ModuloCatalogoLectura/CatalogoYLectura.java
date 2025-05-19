@@ -5,6 +5,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.Adapter.LibrosAdapter;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.Modelo.Libros;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloCatalogoLectura.LecturaLibros.LecturaLibroActivity;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloCatalogoLectura.LibrosCatalogoAdapter.LibrosCatalogoAdapter;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloCatalogoLectura.LibrosCatalogoModelo.LibrosCatalogoModelo;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
@@ -26,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -159,6 +163,35 @@ public class CatalogoYLectura extends AppCompatActivity {
             }
         };
 
+        // Configurar listener para clics en los libros
+        librosAdapter.setOnLibroClickListener(libro -> {
+            String pdfBase64 = libro.getPdfBase64(); // Reemplaza esto si tienes un URL directo
+            if (pdfBase64 != null && !pdfBase64.isEmpty()) {
+                try {
+                    // Decodificar el PDF de Base64
+                    byte[] pdfData = android.util.Base64.decode(pdfBase64, android.util.Base64.DEFAULT);
+
+                    // Guardar el archivo PDF en almacenamiento interno
+                    String fileName = "libro_" + libro.getTitulo().replaceAll("\\s+", "_") + ".pdf";
+                    File pdfFile = new File(getFilesDir(), fileName);
+                    FileOutputStream fos = new FileOutputStream(pdfFile);
+                    fos.write(pdfData);
+                    fos.close();
+
+                    // Abrir la actividad LecturaLibroActivity con la ruta del archivo
+                    Intent intent = new Intent(CatalogoYLectura.this, LecturaLibroActivity.class);
+                    intent.putExtra("pdfPath", pdfFile.getAbsolutePath());
+                    startActivity(intent);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Error al procesar el libro.", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "El libro no está disponible.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         recyclerView.setAdapter(librosAdapter);
         librosAdapter.startListening();
     }
@@ -176,6 +209,15 @@ public class CatalogoYLectura extends AppCompatActivity {
         super.onStop();
         if (librosAdapter != null) {
             librosAdapter.stopListening();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (librosAdapter != null) {
+            librosAdapter.stopListening();
+            recyclerView.setAdapter(null);
+            librosAdapter = null;
         }
     }
 }
