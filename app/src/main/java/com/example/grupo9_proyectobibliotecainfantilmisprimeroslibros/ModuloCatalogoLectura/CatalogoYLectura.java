@@ -211,13 +211,4 @@ public class CatalogoYLectura extends AppCompatActivity {
             librosAdapter.stopListening();
         }
     }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (librosAdapter != null) {
-            librosAdapter.stopListening();
-            recyclerView.setAdapter(null);
-            librosAdapter = null;
-        }
-    }
 }

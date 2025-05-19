@@ -133,19 +133,24 @@ public class LecturaLibroActivity extends AppCompatActivity {
         }
     }
     private void openPage(int index) {
-        if (pdfRenderer.getPageCount() <= index) {
+        if (pdfRenderer == null || index < 0 || index >= pdfRenderer.getPageCount()) {
             return;
         }
-        // Cerrar página actual si existe
+
         if (currentPage != null) {
             currentPage.close();
         }
-        // Abrir página nueva
-        currentPage = pdfRenderer.openPage(index);
 
-        Bitmap bitmap = Bitmap.createBitmap(currentPage.getWidth(), currentPage.getHeight(),
-                Bitmap.Config.ARGB_8888);
+        currentPage = pdfRenderer.openPage(index);
+        Bitmap bitmap = Bitmap.createBitmap(currentPage.getWidth(), currentPage.getHeight(), Bitmap.Config.ARGB_8888);
         currentPage.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
         pdfImageView.setImageBitmap(bitmap);
+        currentPageIndex = index;
+
+        btnPrevPage.setEnabled(index > 0);
+        btnNextPage.setEnabled(index < pdfRenderer.getPageCount() - 1);
+        }
+
     }
-}
+    
