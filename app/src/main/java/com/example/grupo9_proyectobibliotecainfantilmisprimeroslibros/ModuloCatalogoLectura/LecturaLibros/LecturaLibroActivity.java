@@ -36,7 +36,6 @@ public class LecturaLibroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lectura_libro);
 
-        pageNumberTextView = findViewById(R.id.pageNumberTextView);
         pdfImageView = findViewById(R.id.pdfImageView);
         btnPrevPage = findViewById(R.id.btnPrevPage);
         btnNextPage = findViewById(R.id.btnNextPage);
@@ -153,4 +152,3 @@ public class LecturaLibroActivity extends AppCompatActivity {
         }
 
     }
-    
