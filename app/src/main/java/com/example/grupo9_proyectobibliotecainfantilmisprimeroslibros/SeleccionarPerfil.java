@@ -3,6 +3,7 @@ package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,9 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,195 +38,167 @@ public class SeleccionarPerfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seleccionar_perfil);
 
-        initViews();
-        initFirebase();
-        cargarPerfiles();
-    }
+        // Inicializar Firebase
+        FirebaseUser usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
+        if (usuarioActual == null) {
+            Toast.makeText(this, "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
-    private void initViews() {
+        String userId = usuarioActual.getUid();
+        dbRef = FirebaseDatabase.getInstance().getReference("perfiles").child(userId);
+
+        // Inicializar vistas
         containerPerfiles = findViewById(R.id.containerPerfiles);
         btnCrearNuevoPerfil = findViewById(R.id.btnCrearNuevoPerfil);
         btnContinuarComoAdulto = findViewById(R.id.btnContinuarComoAdulto);
-
+        perfilesInfantiles = new ArrayList<>();
         sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
 
+        // Configurar botones
         btnCrearNuevoPerfil.setOnClickListener(v -> {
-            Intent intent = new Intent(this, RegistrarPerfilInfantilActivity.class);
+            Intent intent = new Intent(SeleccionarPerfil.this, RegistrarPerfilInfantilActivity.class);
             startActivity(intent);
         });
 
         btnContinuarComoAdulto.setOnClickListener(v -> {
-            // Guardar que continúa como adulto
-            guardarTipoUsuario("adulto", null);
-            irAMainActivity();
-        });
-    }
+            // Guardar preferencia de sesión como adulto
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("tipo_usuario", "adulto");
+            editor.apply();
 
-    private void initFirebase() {
-        FirebaseUser usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
-        if (usuarioActual != null) {
-            String userId = usuarioActual.getUid();
-            dbRef = FirebaseDatabase.getInstance().getReference("perfiles").child(userId);
-        }
-        perfilesInfantiles = new ArrayList<>();
-    }
-
-    private void cargarPerfiles() {
-        dbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                perfilesInfantiles.clear();
-                containerPerfiles.removeAllViews();
-
-                for (DataSnapshot perfilSnapshot : dataSnapshot.getChildren()) {
-                    try {
-                        // Verificar si el perfil tiene la estructura esperada
-                        if (perfilSnapshot.hasChild("nombre") && perfilSnapshot.hasChild("edad") && perfilSnapshot.hasChild("avatar")) {
-                            // Extraer los datos del perfil
-                            String nombre = perfilSnapshot.child("nombre").getValue(String.class);
-                            Object edadObj = perfilSnapshot.child("edad").getValue();
-                            int edad = 0;
-                            if (edadObj instanceof Long) {
-                                edad = ((Long) edadObj).intValue();
-                            } else if (edadObj instanceof Integer) {
-                                edad = (Integer) edadObj;
-                            } else if (edadObj instanceof String) {
-                                try {
-                                    edad = Integer.parseInt((String) edadObj);
-                                } catch (NumberFormatException e) {
-                                    edad = 0;
-                                }
-                            }
-
-                            String avatar = perfilSnapshot.child("avatar").getValue(String.class);
-                            if (avatar == null) {
-                                avatar = "avatar1";
-                            }
-
-                            // Extraer intereses si existen
-                            List<String> intereses = new ArrayList<>();
-                            if (perfilSnapshot.hasChild("intereses")) {
-                                DataSnapshot interesesSnapshot = perfilSnapshot.child("intereses");
-                                // Verificar si intereses es una lista en Firebase
-                                if (interesesSnapshot.getValue() instanceof List) {
-                                    for (DataSnapshot interesSnapshot : interesesSnapshot.getChildren()) {
-                                        String interes = interesSnapshot.getValue(String.class);
-                                        if (interes != null) {
-                                            intereses.add(interes);
-                                        }
-                                    }
-                                }
-                            }
-
-                            // Crear el perfil y agregarlo a la lista
-                            RegistroPerfilInfantil perfil = new RegistroPerfilInfantil(nombre, edad, avatar, intereses);
-                            perfil.setId(perfilSnapshot.getKey());
-                            perfilesInfantiles.add(perfil);
-                            agregarVistaPerfilInfantil(perfil);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Toast.makeText(SeleccionarPerfil.this,
-                                "Error al cargar un perfil: " + e.getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                // Si no hay perfiles, mostrar mensaje
-                if (perfilesInfantiles.isEmpty()) {
-                    mostrarMensajeSinPerfiles();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(SeleccionarPerfil.this,
-                        "Error al cargar perfiles: " + databaseError.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void agregarVistaPerfilInfantil(RegistroPerfilInfantil perfil) {
-        View perfilView = getLayoutInflater().inflate(R.layout.item_perfil_infantil, null);
-
-        ImageView imageAvatar = perfilView.findViewById(R.id.imageAvatar);
-        TextView textNombre = perfilView.findViewById(R.id.textNombre);
-        TextView textEdad = perfilView.findViewById(R.id.textEdad);
-        //TextView textIntereses = perfilView.findViewById(R.id.txtI);
-        Button btnSeleccionar = perfilView.findViewById(R.id.btnSeleccionar);
-
-        // Configurar avatar
-        int avatarResId = getAvatarResource(perfil.getAvatar());
-        imageAvatar.setImageResource(avatarResId);
-
-        textNombre.setText(perfil.getNombre());
-        textEdad.setText(perfil.getEdad() + " años");
-
-        // Formatear intereses
-//        if (perfil.getIntereses() != null && !perfil.getIntereses().isEmpty()) {
-//            textIntereses.setText(android.text.TextUtils.join(", ", perfil.getIntereses()));
-//        } else {
-//            textIntereses.setText("Sin intereses");
-//        }
-
-        btnSeleccionar.setOnClickListener(v -> {
-            // Guardar perfil seleccionado y tipo de usuario
-            guardarTipoUsuario("infantil", perfil);
-            irAMainActivity();
+            // Ir a la actividad principal
+            Intent intent = new Intent(SeleccionarPerfil.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         });
 
-        containerPerfiles.addView(perfilView);
-    }
-
-    private void mostrarMensajeSinPerfiles() {
-        TextView mensaje = new TextView(this);
-        mensaje.setText("No hay perfiles infantiles creados.\n¡Crea uno para comenzar!");
-        mensaje.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        mensaje.setPadding(20, 40, 20, 40);
-        containerPerfiles.addView(mensaje);
-    }
-
-    private int getAvatarResource(String avatarName) {
-        switch (avatarName) {
-            case "avatar1":
-                return R.drawable.avatar_nino1;
-            case "avatar2":
-                return R.drawable.avatar_nino2;
-            case "avatar3":
-                return R.drawable.avatar_nino3;
-            default:
-                return R.drawable.avatar_nino1;
-        }
-    }
-
-    private void guardarTipoUsuario(String tipoUsuario, RegistroPerfilInfantil perfil) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("tipo_usuario", tipoUsuario);
-
-        if (perfil != null) {
-            editor.putString("perfil_infantil_id", perfil.getId());
-            editor.putString("perfil_infantil_nombre", perfil.getNombre());
-            editor.putInt("perfil_infantil_edad", perfil.getEdad());
-            editor.putString("perfil_infantil_avatar", perfil.getAvatar());
-        }
-
-        editor.apply();
-    }
-
-    private void irAMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
+        // Cargar perfiles infantiles
+        cargarPerfilesInfantiles();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // Recargar perfiles cuando se regrese de crear un nuevo perfil
-        if (dbRef != null) {
-            cargarPerfiles();
+        // Recargar perfiles cuando se regresa a esta actividad
+        cargarPerfilesInfantiles();
+    }
+
+    private void cargarPerfilesInfantiles() {
+        perfilesInfantiles.clear();
+        containerPerfiles.removeAllViews();
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot perfilSnapshot : dataSnapshot.getChildren()) {
+                    try {
+                        // Verificar si es un nodo de perfil completo
+                        if (perfilSnapshot.hasChild("nombre") && perfilSnapshot.hasChild("edad") && perfilSnapshot.hasChild("avatar")) {
+                            // Extraer los datos manualmente para evitar problemas de conversión
+                            String perfilId = perfilSnapshot.getKey();
+                            String nombre = perfilSnapshot.child("nombre").getValue(String.class);
+                            Long edadLong = perfilSnapshot.child("edad").getValue(Long.class);
+                            int edad = edadLong != null ? edadLong.intValue() : 0;
+                            String avatar = perfilSnapshot.child("avatar").getValue(String.class);
+
+                            // Crear objeto de perfil
+                            RegistroPerfilInfantil perfil = new RegistroPerfilInfantil();
+                            perfil.setNombre(nombre);
+                            perfil.setEdad(edad);
+                            perfil.setAvatar(avatar);
+                            perfil.setId(perfilId);
+
+                            // Obtener intereses si existen
+                            DataSnapshot interesesSnapshot = perfilSnapshot.child("intereses");
+                            if (interesesSnapshot.exists()) {
+                                List<String> intereses = new ArrayList<>();
+                                for (DataSnapshot interesSnapshot : interesesSnapshot.getChildren()) {
+                                    String interes = interesSnapshot.getValue(String.class);
+                                    if (interes != null) {
+                                        intereses.add(interes);
+                                    }
+                                }
+                                perfil.setIntereses(intereses);
+                            }
+
+                            perfilesInfantiles.add(perfil);
+                            agregarVistaPerfilInfantil(perfil);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // Mostrar mensaje si no hay perfiles
+                if (perfilesInfantiles.isEmpty()) {
+                    mostrarMensajeNoPerfiles();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(SeleccionarPerfil.this,
+                        "Error al cargar perfiles: " + databaseError.getMessage(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void agregarVistaPerfilInfantil(RegistroPerfilInfantil perfil) {
+        View itemView = LayoutInflater.from(this).inflate(R.layout.item_perfil_infantil, containerPerfiles, false);
+
+        ImageView imgAvatar = itemView.findViewById(R.id.imageAvatar);
+        TextView txtNombre = itemView.findViewById(R.id.textNombre);
+        TextView txtEdad = itemView.findViewById(R.id.textEdad);
+        Button btnSeleccionar = itemView.findViewById(R.id.btnSeleccionar);
+
+        // Configurar vista con datos del perfil
+        switch (perfil.getAvatar()) {
+            case "avatar1":
+                imgAvatar.setImageResource(R.drawable.avatar_nino1);
+                break;
+            case "avatar2":
+                imgAvatar.setImageResource(R.drawable.avatar_nino2);
+                break;
+            case "avatar3":
+                imgAvatar.setImageResource(R.drawable.avatar_nino3);
+                break;
+            default:
+                imgAvatar.setImageResource(R.drawable.avatar_nino1);
+                break;
         }
+
+        txtNombre.setText(perfil.getNombre());
+        txtEdad.setText(perfil.getEdad() + " años");
+
+        btnSeleccionar.setOnClickListener(v -> {
+            // Guardar selección de perfil en SharedPreferences
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("tipo_usuario", "infantil");
+            editor.putString("perfil_infantil_id", perfil.getId());
+            editor.putString("perfil_infantil_nombre", perfil.getNombre());
+            editor.putInt("perfil_infantil_edad", perfil.getEdad());
+            editor.putString("perfil_infantil_avatar", perfil.getAvatar());
+            editor.apply();
+
+            // Ir a la actividad principal
+            Intent intent = new Intent(SeleccionarPerfil.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        });
+
+        containerPerfiles.addView(itemView);
+    }
+
+    private void mostrarMensajeNoPerfiles() {
+        TextView txtMensaje = new TextView(this);
+        txtMensaje.setText("No hay perfiles infantiles. ¡Crea uno nuevo!");
+        txtMensaje.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        txtMensaje.setPadding(16, 32, 16, 32);
+        containerPerfiles.addView(txtMensaje);
     }
 }
