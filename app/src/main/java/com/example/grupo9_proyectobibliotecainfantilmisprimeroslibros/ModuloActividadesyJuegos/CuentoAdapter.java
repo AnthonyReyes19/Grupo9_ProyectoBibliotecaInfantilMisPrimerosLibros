@@ -44,7 +44,7 @@ public class CuentoAdapter extends RecyclerView.Adapter<CuentoAdapter.CuentoView
             Intent intent;
 
             switch (titulo) {
-                case "prueba":
+                case "Caperucita Roja":
                     intent = new Intent(context, verCuentoUnoPaginauno.class);
                     break;
                 //case "La Bella durmiente":
