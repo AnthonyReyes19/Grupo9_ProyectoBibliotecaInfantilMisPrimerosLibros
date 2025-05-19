@@ -37,7 +37,7 @@ public class LibrosCatalogoModelo {
     }
 
     public String getEdad() {
-        return titulo;
+        return edad;
     }
 
     public void setEdad(String edad) {

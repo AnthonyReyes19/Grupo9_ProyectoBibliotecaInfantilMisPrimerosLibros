@@ -6,6 +6,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,14 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 public class LibrosCatalogoAdapter extends FirestoreRecyclerAdapter<LibrosCatalogoModelo, LibrosCatalogoAdapter.LibrosViewHolder> {
+
+    private OnLibroClickListener listener;
+    public interface OnLibroClickListener {
+        void onLibroClick(LibrosCatalogoModelo libro);
+    }
+    public void setOnLibroClickListener(OnLibroClickListener listener) {
+        this.listener = listener;
+    }
 
     public LibrosCatalogoAdapter(@NonNull FirestoreRecyclerOptions<LibrosCatalogoModelo> options) {
         super(options);
@@ -52,7 +61,7 @@ public class LibrosCatalogoAdapter extends FirestoreRecyclerAdapter<LibrosCatalo
         return new LibrosViewHolder(view);
     }
 
-    public static class LibrosViewHolder extends RecyclerView.ViewHolder {
+    public class LibrosViewHolder extends RecyclerView.ViewHolder {
         TextView titulo, categoria, edad;
         ImageView imagen;
 
@@ -62,6 +71,16 @@ public class LibrosCatalogoAdapter extends FirestoreRecyclerAdapter<LibrosCatalo
             categoria = itemView.findViewById(R.id.tvCategoria);
             edad = itemView.findViewById(R.id.textViewEdad);
             imagen = itemView.findViewById(R.id.ivPortada);
+
+            itemView.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && listener != null) {
+                    LibrosCatalogoModelo libro = getSnapshots().getSnapshot(position).toObject(LibrosCatalogoModelo.class);
+                    if (libro != null) {
+                        listener.onLibroClick(libro);
+                    }
+                }
+            });
         }
     }
 }

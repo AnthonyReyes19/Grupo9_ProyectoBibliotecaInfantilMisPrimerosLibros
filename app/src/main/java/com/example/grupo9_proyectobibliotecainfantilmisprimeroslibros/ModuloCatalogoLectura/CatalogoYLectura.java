@@ -80,11 +80,11 @@ public class CatalogoYLectura extends AppCompatActivity {
     private void configurarSpinners() {
         List<String> edadesSpinner = new ArrayList<>();
         edadesSpinner.add("Seleccionar edad...");
-        edadesSpinner.add("3 años");
-        edadesSpinner.add("4 años");
-        edadesSpinner.add("5 años");
-        edadesSpinner.add("6 años");
-        edadesSpinner.add("7 años");
+        edadesSpinner.add("3");
+        edadesSpinner.add("4");
+        edadesSpinner.add("5");
+        edadesSpinner.add("6");
+        edadesSpinner.add("7");
 
         List<String> categoriasSpinner = new ArrayList<>();
         categoriasSpinner.add("Seleccionar categoría...");
@@ -92,6 +92,8 @@ public class CatalogoYLectura extends AppCompatActivity {
         categoriasSpinner.add("Poesía");
         categoriasSpinner.add("Cuentos");
         categoriasSpinner.add("Aventura");
+        categoriasSpinner.add("Valores");
+        categoriasSpinner.add("colores");
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.control_spinner, edadesSpinner);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
