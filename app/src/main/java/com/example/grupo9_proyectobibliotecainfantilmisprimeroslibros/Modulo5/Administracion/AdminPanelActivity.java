@@ -51,4 +51,9 @@ public class AdminPanelActivity extends AppCompatActivity {
         startActivity(ventana);
     }
 
+    public void GestionarPerfiles(View v) {
+        Intent ventana = new Intent(this, GestionUsuarios.class);
+        startActivity(ventana);
+    }
+
 }

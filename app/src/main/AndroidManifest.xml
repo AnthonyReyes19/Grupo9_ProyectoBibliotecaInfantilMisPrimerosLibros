@@ -16,6 +16,12 @@
         android:theme="@style/Theme.Grupo9_ProyectoBibliotecaInfantilMisPrimerosLibros"
         tools:targetApi="31">
         <activity
+            android:name=".Modulo5.Administracion.EditarUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".Modulo5.Administracion.GestionUsuarios"
+            android:exported="false" />
+        <activity
             android:name=".Modulo5.Administracion.AdministracionLibros"
             android:exported="false" />
         <activity
@@ -80,7 +86,6 @@
             android:name=".RegistrarPerfilInfantilActivity"
             android:exported="true" />
         <activity android:name=".ListarPerfilesInfantilesActivity" />
-        <activity android:name=".SeleccionarPerfil" />
         <activity android:name=".EditarPerfilInfantilActivity" />
         <activity android:name=".ConsultarPerfilActivity" />
         <activity android:name=".ModuloCatalogoLectura.CatalogoYLectura" />

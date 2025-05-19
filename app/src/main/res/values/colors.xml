@@ -37,4 +37,8 @@
     <color name="divider">#E0E0E0</color>
     <color name="shadow">#33000000</color>
     <color name="transparent">#00000000</color>
+
+    <color name="purple_500">#673AB7</color>
+    <color name="purple_700">#512DA8</color>
+    <color name="purple_200">#D1C4E9</color>
 </resources>
