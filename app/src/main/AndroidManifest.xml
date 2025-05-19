@@ -80,6 +80,7 @@
             android:name=".RegistrarPerfilInfantilActivity"
             android:exported="true" />
         <activity android:name=".ListarPerfilesInfantilesActivity" />
+        <activity android:name=".SeleccionarPerfil" />
         <activity android:name=".EditarPerfilInfantilActivity" />
         <activity android:name=".ConsultarPerfilActivity" />
         <activity android:name=".ModuloCatalogoLectura.CatalogoYLectura" />

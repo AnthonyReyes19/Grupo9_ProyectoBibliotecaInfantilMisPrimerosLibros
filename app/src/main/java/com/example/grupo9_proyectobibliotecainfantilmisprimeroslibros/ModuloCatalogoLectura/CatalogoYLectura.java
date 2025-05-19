@@ -13,7 +13,10 @@ import android.widget.Toast;
 
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.Adapter.LibrosAdapter;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.Modelo.Libros;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloCatalogoLectura.LibrosCatalogoAdapter.LibrosCatalogoAdapter;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloCatalogoLectura.LibrosCatalogoModelo.LibrosCatalogoModelo;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +33,7 @@ public class CatalogoYLectura extends AppCompatActivity {
     private Spinner spinnerEdad, spinnerCategoria;
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private LibrosAdapter librosAdapter;
+    private LibrosCatalogoAdapter librosAdapter;
 
     private String filtroEdad = "Seleccionar edad...";
     private String filtroCategoria = "Seleccionar categoría...";
@@ -41,16 +44,42 @@ public class CatalogoYLectura extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalogo_y_lectura);
 
-        Spinner spinnerEdad = findViewById(R.id.spinnerEdad);
-        Spinner spinnerCategoria = findViewById(R.id.spinnerCategoria);
-        SearchView searchView = findViewById(R.id.SearchView);
-        RecyclerView recyclerViewLibros = findViewById(R.id.recyclerView);
-        recyclerViewLibros.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewLibros.setHasFixedSize(true);
+        // Vinculación de vistas
+        spinnerEdad = findViewById(R.id.spinnerEdad);
+        spinnerCategoria = findViewById(R.id.spinnerCategoria);
+        searchView = findViewById(R.id.SearchView);
+        recyclerView = findViewById(R.id.recyclerView);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
 
+        // Configuración de Spinners
+        configurarSpinners();
+
+        // Listener para SearchView
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filtroBusqueda = query.trim();
+                actualizarConsulta();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filtroBusqueda = newText.trim();
+                actualizarConsulta();
+                return true;
+            }
+        });
+
+        // Carga inicial
+        actualizarConsulta();
+    }
+
+    private void configurarSpinners() {
         List<String> edadesSpinner = new ArrayList<>();
-        edadesSpinner.add("Seleccionar edad..."); // Mensaje inicial
+        edadesSpinner.add("Seleccionar edad...");
         edadesSpinner.add("3 años");
         edadesSpinner.add("4 años");
         edadesSpinner.add("5 años");
@@ -58,12 +87,11 @@ public class CatalogoYLectura extends AppCompatActivity {
         edadesSpinner.add("7 años");
 
         List<String> categoriasSpinner = new ArrayList<>();
-        categoriasSpinner.add("Seleccionar categoría..."); // Mensaje inicial
+        categoriasSpinner.add("Seleccionar categoría...");
         categoriasSpinner.add("Fantasía");
         categoriasSpinner.add("Poesía");
         categoriasSpinner.add("Cuentos");
         categoriasSpinner.add("Aventura");
-
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.control_spinner, edadesSpinner);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -73,7 +101,6 @@ public class CatalogoYLectura extends AppCompatActivity {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategoria.setAdapter(adapter2);
 
-        // Listeners para spinners
         spinnerEdad.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(android.widget.AdapterView<?> parent, android.view.View view, int position, long id) {
@@ -95,57 +122,32 @@ public class CatalogoYLectura extends AppCompatActivity {
             @Override
             public void onNothingSelected(android.widget.AdapterView<?> parent) {}
         });
-
-        // Listener para SearchView
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                filtroBusqueda = query.trim();
-                actualizarConsulta();
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filtroBusqueda = newText.trim();
-                actualizarConsulta();
-                return true;
-            }
-        });
-
-        // Carga inicial
-        actualizarConsulta();
-
     }
 
     private void actualizarConsulta() {
         Query query = FirebaseFirestore.getInstance().collection("libros");
 
-        // Aplicar filtro por edad si no es la opción por defecto
         if (!filtroEdad.equals("Seleccionar edad...")) {
             query = query.whereEqualTo("edad", filtroEdad);
         }
 
-        // Aplicar filtro por categoría si no es la opción por defecto
         if (!filtroCategoria.equals("Seleccionar categoría...")) {
             query = query.whereEqualTo("categoria", filtroCategoria);
         }
 
-        // Para búsqueda por título, Firestore no tiene consultas contains, pero se puede hacer una búsqueda simple por igual o con un índice, para fines demo usaremos whereEqualTo:
         if (!filtroBusqueda.isEmpty()) {
-            // Si quieres búsqueda más avanzada, debes usar una solución externa o recuperar todos y filtrar en cliente
             query = query.whereEqualTo("titulo", filtroBusqueda);
         }
 
-        FirestoreRecyclerOptions<Libros> options = new FirestoreRecyclerOptions.Builder<Libros>()
-                .setQuery(query, Libros.class)
+        FirestoreRecyclerOptions<LibrosCatalogoModelo> options = new FirestoreRecyclerOptions.Builder<LibrosCatalogoModelo>()
+                .setQuery(query, LibrosCatalogoModelo.class)
                 .build();
 
         if (librosAdapter != null) {
             librosAdapter.stopListening();
         }
 
-        librosAdapter = new LibrosAdapter(options, this) {
+        librosAdapter = new LibrosCatalogoAdapter(options) {
             @Override
             public void onDataChanged() {
                 super.onDataChanged();

@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent ventana = new Intent(this, LoginPrincipal.class);
             startActivity(ventana);
             finish();
-        } else if (title.equals("Actividades y Juegos")) {
+//        } else if (title.equals("Actividades y Juegos")) {
 //            Intent ventana = new Intent(this, loginPrincipalModuloReyes.class);
 //            startActivity(ventana);
         } else if(title.equals("Padres y Educadores")){

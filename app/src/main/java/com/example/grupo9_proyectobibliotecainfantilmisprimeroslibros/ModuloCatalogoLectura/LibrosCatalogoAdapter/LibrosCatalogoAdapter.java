@@ -1,6 +1,5 @@
 package com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloCatalogoLectura.LibrosCatalogoAdapter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -13,62 +12,56 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.Modulo5.Administracion.Modelo.Libros;
+import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloCatalogoLectura.LibrosCatalogoModelo.LibrosCatalogoModelo;
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import java.util.List;
+public class LibrosCatalogoAdapter extends FirestoreRecyclerAdapter<LibrosCatalogoModelo, LibrosCatalogoAdapter.LibrosViewHolder> {
 
-//public class LibrosAdapter extends RecyclerView.Adapter<LibrosAdapter.LibrosViewHolder> {
-//
-//    private Context context;
-//    private List<Libros> listaLibros;
-//
-//    public LibrosAdapter(Context context, List<Libros> listaLibros) {
-//        this.context = context;
-//        this.listaLibros = listaLibros;
-//    }
-//
-////    @NonNull
-////    @Override
-////    public LibrosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//////        View view = LayoutInflater.from(context).inflate(R.layout.item_libro, parent, false);
-//////        return new LibrosViewHolder(view);
-////    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull LibrosViewHolder holder, int position) {
-//        Libros libro = listaLibros.get(position);
-//
-//        // Configura el título y categoría
-//        holder.tvTitulo.setText(libro.getTitulo());
-//        holder.tvCategoria.setText(libro.getCategoria());
-//
-//        // Decodifica la imagen de portada desde base64
-////        String portadaBase64 = libro.getPortadaBase64();
-////        if (portadaBase64 != null && !portadaBase64.isEmpty()) {
-////            byte[] decodedString = Base64.decode(portadaBase64, Base64.DEFAULT);
-////            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-////            holder.ivPortada.setImageBitmap(decodedByte);
-////        } else {
-////            // Imagen por defecto si no hay portada
-////            holder.ivPortada.setImageResource(R.drawable.placeholder_image);
-////        }
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return listaLibros.size();
-//    }
-//
-//    public static class LibrosViewHolder extends RecyclerView.ViewHolder {
-//        TextView tvTitulo, tvCategoria;
-//        ImageView ivPortada;
-//
-//        public LibrosViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//            tvTitulo = itemView.findViewById(R.id.tvTitulo);
-//            tvCategoria = itemView.findViewById(R.id.tvCategoria);
-//            ivPortada = itemView.findViewById(R.id.ivPortada);
-//        }
-//    }
-//}
+    public LibrosCatalogoAdapter(@NonNull FirestoreRecyclerOptions<LibrosCatalogoModelo> options) {
+        super(options);
+    }
+
+    @Override
+    protected void onBindViewHolder(@NonNull LibrosViewHolder holder, int position, @NonNull LibrosCatalogoModelo model) {
+        holder.titulo.setText(model.getTitulo());
+        holder.categoria.setText(model.getCategoria());
+        holder.edad.setText(model.getEdad());
+
+        // Decodificar la imagen en Base64
+        String base64Image = model.getPortadaBase64();
+        if (base64Image != null && !base64Image.isEmpty()) {
+            try {
+                byte[] decodedBytes = Base64.decode(base64Image, Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                holder.imagen.setImageBitmap(bitmap);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+                holder.imagen.setImageResource(R.drawable.placeholder_image);
+            }
+        } else {
+            holder.imagen.setImageResource(R.drawable.placeholder_image);
+        }
+    }
+
+    @NonNull
+    @Override
+    public LibrosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.control_recyclerview, parent, false);
+        return new LibrosViewHolder(view);
+    }
+
+    public static class LibrosViewHolder extends RecyclerView.ViewHolder {
+        TextView titulo, categoria, edad;
+        ImageView imagen;
+
+        public LibrosViewHolder(@NonNull View itemView) {
+            super(itemView);
+            titulo = itemView.findViewById(R.id.tvTitulo);
+            categoria = itemView.findViewById(R.id.tvCategoria);
+            edad = itemView.findViewById(R.id.textViewEdad);
+            imagen = itemView.findViewById(R.id.ivPortada);
+        }
+    }
+}
