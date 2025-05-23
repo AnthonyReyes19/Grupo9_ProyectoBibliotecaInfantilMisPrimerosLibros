@@ -45,19 +45,15 @@ public class LibrosAdapter extends FirestoreRecyclerAdapter<Libros, LibrosAdapte
         if (adapterPosition == RecyclerView.NO_POSITION) {
             return;
         }
-
         // Validar que la posición existe en los snapshots
         if (adapterPosition >= getSnapshots().size()) {
             return;
         }
-
         DocumentSnapshot documentSnapshot = getSnapshots().getSnapshot(adapterPosition);
         final String id = documentSnapshot.getId();
-
         holder.titulo.setText(model.getTitulo());
         holder.categoria.setText(model.getCategoria());
         holder.edad.setText(model.getEdad());
-
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +65,6 @@ public class LibrosAdapter extends FirestoreRecyclerAdapter<Libros, LibrosAdapte
                 }
             }
         });
-
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,8 +106,7 @@ public class LibrosAdapter extends FirestoreRecyclerAdapter<Libros, LibrosAdapte
     @Override
     public void onDataChanged() {
         super.onDataChanged();
-        // Este método se llamará cuando los datos cambien
-        // Puedes agregar lógica adicional aquí si es necesario
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

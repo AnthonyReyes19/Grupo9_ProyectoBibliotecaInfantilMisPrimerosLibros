@@ -32,6 +32,7 @@ public class SeleccionarPerfil extends AppCompatActivity {
     private DatabaseReference dbRef;
     private List<RegistroPerfilInfantil> perfilesInfantiles;
     private SharedPreferences sharedPreferences;
+    private boolean isLoadingProfiles = false; // Flag para evitar cargas múltiples
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,28 +76,40 @@ public class SeleccionarPerfil extends AppCompatActivity {
             finish();
         });
 
-        // Cargar perfiles infantiles
-        cargarPerfilesInfantiles();
+        // NO cargar perfiles aquí, solo en onResume
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // Recargar perfiles cuando se regresa a esta actividad
-        cargarPerfilesInfantiles();
+        // Cargar perfiles solo si no se están cargando ya
+        if (!isLoadingProfiles) {
+            cargarPerfilesInfantiles();
+        }
     }
 
     private void cargarPerfilesInfantiles() {
+        // Establecer flag para evitar cargas múltiples
+        isLoadingProfiles = true;
+
+        // Limpiar lista y vistas antes de cargar
         perfilesInfantiles.clear();
         containerPerfiles.removeAllViews();
 
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Limpiar de nuevo por si acaso
+                perfilesInfantiles.clear();
+                containerPerfiles.removeAllViews();
+
                 for (DataSnapshot perfilSnapshot : dataSnapshot.getChildren()) {
                     try {
                         // Verificar si es un nodo de perfil completo
-                        if (perfilSnapshot.hasChild("nombre") && perfilSnapshot.hasChild("edad") && perfilSnapshot.hasChild("avatar")) {
+                        if (perfilSnapshot.hasChild("nombre") &&
+                                perfilSnapshot.hasChild("edad") &&
+                                perfilSnapshot.hasChild("avatar")) {
+
                             // Extraer los datos manualmente para evitar problemas de conversión
                             String perfilId = perfilSnapshot.getKey();
                             String nombre = perfilSnapshot.child("nombre").getValue(String.class);
@@ -104,38 +117,48 @@ public class SeleccionarPerfil extends AppCompatActivity {
                             int edad = edadLong != null ? edadLong.intValue() : 0;
                             String avatar = perfilSnapshot.child("avatar").getValue(String.class);
 
-                            // Crear objeto de perfil
-                            RegistroPerfilInfantil perfil = new RegistroPerfilInfantil();
-                            perfil.setNombre(nombre);
-                            perfil.setEdad(edad);
-                            perfil.setAvatar(avatar);
-                            perfil.setId(perfilId);
+                            // Verificar que los datos no sean nulos
+                            if (nombre != null && avatar != null && perfilId != null) {
+                                // Crear objeto de perfil
+                                RegistroPerfilInfantil perfil = new RegistroPerfilInfantil();
+                                perfil.setNombre(nombre);
+                                perfil.setEdad(edad);
+                                perfil.setAvatar(avatar);
+                                perfil.setId(perfilId);
 
-                            // Obtener intereses si existen
-                            DataSnapshot interesesSnapshot = perfilSnapshot.child("intereses");
-                            if (interesesSnapshot.exists()) {
-                                List<String> intereses = new ArrayList<>();
-                                for (DataSnapshot interesSnapshot : interesesSnapshot.getChildren()) {
-                                    String interes = interesSnapshot.getValue(String.class);
-                                    if (interes != null) {
-                                        intereses.add(interes);
+                                // Obtener intereses si existen
+                                DataSnapshot interesesSnapshot = perfilSnapshot.child("intereses");
+                                if (interesesSnapshot.exists()) {
+                                    List<String> intereses = new ArrayList<>();
+                                    for (DataSnapshot interesSnapshot : interesesSnapshot.getChildren()) {
+                                        String interes = interesSnapshot.getValue(String.class);
+                                        if (interes != null) {
+                                            intereses.add(interes);
+                                        }
                                     }
+                                    perfil.setIntereses(intereses);
                                 }
-                                perfil.setIntereses(intereses);
-                            }
 
-                            perfilesInfantiles.add(perfil);
-                            agregarVistaPerfilInfantil(perfil);
+                                perfilesInfantiles.add(perfil);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
 
+                // Ahora agregar las vistas después de cargar todos los perfiles
+                for (RegistroPerfilInfantil perfil : perfilesInfantiles) {
+                    agregarVistaPerfilInfantil(perfil);
+                }
+
                 // Mostrar mensaje si no hay perfiles
                 if (perfilesInfantiles.isEmpty()) {
                     mostrarMensajeNoPerfiles();
                 }
+
+                // Restablecer flag
+                isLoadingProfiles = false;
             }
 
             @Override
@@ -143,6 +166,8 @@ public class SeleccionarPerfil extends AppCompatActivity {
                 Toast.makeText(SeleccionarPerfil.this,
                         "Error al cargar perfiles: " + databaseError.getMessage(),
                         Toast.LENGTH_LONG).show();
+                // Restablecer flag en caso de error
+                isLoadingProfiles = false;
             }
         });
     }
@@ -200,5 +225,12 @@ public class SeleccionarPerfil extends AppCompatActivity {
         txtMensaje.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         txtMensaje.setPadding(16, 32, 16, 32);
         containerPerfiles.addView(txtMensaje);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Asegurar que el flag se restablezca si la actividad se pausa
+        isLoadingProfiles = false;
     }
 }

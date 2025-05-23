@@ -132,11 +132,30 @@ public class MenuPerfilInfantilActivity extends AppCompatActivity {
     }
 
     private void editarPerfil() {
-        // Pasar el ID del perfil seleccionado a la actividad de edición
-        Intent intent = new Intent(MenuPerfilInfantilActivity.this, EditarPerfilInfantilActivity.class);
-        intent.putExtra("perfilId", perfilSeleccionadoId);
-        intent.putExtra("usuarioId", usuarioId);
-        startActivity(intent);
+        // Pasar TODA la información necesaria a la actividad de edición
+        databaseRef.child(perfilSeleccionadoId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Intent intent = new Intent(MenuPerfilInfantilActivity.this, EditarPerfilInfantilActivity.class);
+                    // IMPORTANTE: Pasar tanto el usuarioId como el perfilId
+                    intent.putExtra("usuarioId", usuarioId);
+                    intent.putExtra("perfilId", perfilSeleccionadoId);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MenuPerfilInfantilActivity.this,
+                            "El perfil no existe",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MenuPerfilInfantilActivity.this,
+                        "Error: " + error.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void mostrarDialogoEliminar() {
@@ -180,6 +199,9 @@ public class MenuPerfilInfantilActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // Actualizar el perfilSeleccionadoId por si cambió
+        perfilSeleccionadoId = sharedPreferences.getString("perfil_infantil_id", null);
+
         // Verificar si todavía hay un perfil seleccionado al volver a esta actividad
         if (perfilSeleccionadoId == null) {
             // Redirigir a la selección de perfil

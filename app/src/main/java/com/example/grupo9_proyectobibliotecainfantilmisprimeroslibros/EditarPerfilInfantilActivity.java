@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
@@ -20,16 +22,31 @@ public class EditarPerfilInfantilActivity extends AppCompatActivity {
     private Button btnActualizar;
     private String selectedAvatar;
     private String perfilId;
+    private String usuarioId;
     private DatabaseReference dbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil_infantil);
+
+        // Obtener ambos IDs del intent
+        usuarioId = getIntent().getStringExtra("usuarioId");
+        perfilId = getIntent().getStringExtra("perfilId");
+
+        if (usuarioId == null || perfilId == null) {
+            Toast.makeText(this, "Error: Datos incompletos", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         initViews();
 
-        perfilId = getIntent().getStringExtra("perfilId");
-        dbRef = FirebaseDatabase.getInstance().getReference("perfiles").child(perfilId);
+        // IMPORTANTE: Usar la ruta correcta con usuarioId y perfilId
+        dbRef = FirebaseDatabase.getInstance().getReference("perfiles")
+                .child(usuarioId)
+                .child(perfilId);
+
         cargarDatosPerfil();
         configurarListeners();
     }
@@ -49,30 +66,56 @@ public class EditarPerfilInfantilActivity extends AppCompatActivity {
 
     private void cargarDatosPerfil() {
         dbRef.get().addOnSuccessListener(snapshot -> {
-            RegistroPerfilInfantil perfil = snapshot.getValue(RegistroPerfilInfantil.class);
-            if (perfil != null) {
-                editNombre.setText(perfil.getNombre());
-                editEdad.setText(String.valueOf(perfil.getEdad()));
+            if (snapshot.exists()) {
+                // Cargar datos manualmente para evitar problemas de deserialización
+                String nombre = snapshot.child("nombre").getValue(String.class);
+                Long edadLong = snapshot.child("edad").getValue(Long.class);
+                String avatar = snapshot.child("avatar").getValue(String.class);
+
+                if (nombre != null) {
+                    editNombre.setText(nombre);
+                }
+
+                if (edadLong != null) {
+                    editEdad.setText(String.valueOf(edadLong));
+                }
 
                 // Verifica si el avatar es nulo antes de asignarlo
-                selectedAvatar = perfil.getAvatar();
-                if (selectedAvatar == null) {
+                selectedAvatar = avatar;
+                if (selectedAvatar == null || selectedAvatar.isEmpty()) {
                     selectedAvatar = "avatar1"; // Valor predeterminado
                 }
 
                 resaltarAvatarSeleccionado();
 
-                if (perfil.getIntereses() != null) {
-                    for (String interes : perfil.getIntereses()) {
-                        switch (interes) {
-                            case "Cuentos": cbCuentos.setChecked(true); break;
-                            case "Aventura": cbAventura.setChecked(true); break;
-                            case "Ciencia": cbCiencia.setChecked(true); break;
-                            case "Animales": cbAnimales.setChecked(true); break;
+                // Cargar intereses
+                DataSnapshot interesesSnapshot = snapshot.child("intereses");
+                if (interesesSnapshot.exists()) {
+                    for (DataSnapshot interesSnapshot : interesesSnapshot.getChildren()) {
+                        String interes = interesSnapshot.getValue(String.class);
+                        if (interes != null) {
+                            switch (interes) {
+                                case "Cuentos":
+                                    cbCuentos.setChecked(true);
+                                    break;
+                                case "Aventura":
+                                    cbAventura.setChecked(true);
+                                    break;
+                                case "Ciencia":
+                                    cbCiencia.setChecked(true);
+                                    break;
+                                case "Animales":
+                                    cbAnimales.setChecked(true);
+                                    break;
+                            }
                         }
                     }
                 }
+            } else {
+                Toast.makeText(this, "No se encontraron datos del perfil", Toast.LENGTH_SHORT).show();
             }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(this, "Error al cargar datos: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -91,6 +134,7 @@ public class EditarPerfilInfantilActivity extends AppCompatActivity {
             selectedAvatar = "avatar3";
             resaltarAvatarSeleccionado();
         });
+
         btnActualizar.setOnClickListener(v -> actualizarPerfil());
     }
 
@@ -139,16 +183,13 @@ public class EditarPerfilInfantilActivity extends AppCompatActivity {
             int edad = Integer.parseInt(edadStr);
             List<String> intereses = obtenerInteresesSeleccionados();
 
-            RegistroPerfilInfantil perfilActualizado = new RegistroPerfilInfantil(
-                    nombre,
-                    edad,
-                    selectedAvatar,
-                    intereses
-            );
-
-            dbRef.setValue(perfilActualizado)
+            // Actualizar solo los campos necesarios
+            dbRef.child("nombre").setValue(nombre);
+            dbRef.child("edad").setValue(edad);
+            dbRef.child("avatar").setValue(selectedAvatar);
+            dbRef.child("intereses").setValue(intereses)
                     .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(this, "Perfil actualizado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show();
                         finish();
                     })
                     .addOnFailureListener(e -> {
