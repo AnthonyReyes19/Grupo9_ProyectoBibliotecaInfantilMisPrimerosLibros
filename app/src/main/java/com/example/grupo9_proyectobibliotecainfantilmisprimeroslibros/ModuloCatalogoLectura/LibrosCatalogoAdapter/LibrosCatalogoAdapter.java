@@ -6,7 +6,6 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,23 +16,43 @@ import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.ModuloCata
 import com.example.grupo9_proyectobibliotecainfantilmisprimeroslibros.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class LibrosCatalogoAdapter extends FirestoreRecyclerAdapter<LibrosCatalogoModelo, LibrosCatalogoAdapter.LibrosViewHolder> {
 
     private OnLibroClickListener listener;
+    private RecyclerView recyclerView;
+
     public interface OnLibroClickListener {
         void onLibroClick(LibrosCatalogoModelo libro);
     }
+
     public void setOnLibroClickListener(OnLibroClickListener listener) {
         this.listener = listener;
     }
 
     public LibrosCatalogoAdapter(@NonNull FirestoreRecyclerOptions<LibrosCatalogoModelo> options) {
         super(options);
+        // Enable stable IDs to help prevent inconsistency errors
+        setHasStableIds(true);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.recyclerView = recyclerView;
+        if (recyclerView != null && recyclerView.getItemAnimator() != null) {
+            recyclerView.getItemAnimator().setChangeDuration(0);
+        }
     }
 
     @Override
     protected void onBindViewHolder(@NonNull LibrosViewHolder holder, int position, @NonNull LibrosCatalogoModelo model) {
+        // Disable item change animations to prevent flicker
+        if (recyclerView != null && recyclerView.getItemAnimator() != null) {
+            recyclerView.getItemAnimator().setChangeDuration(0);
+        }
+
         holder.titulo.setText(model.getTitulo());
         holder.categoria.setText(model.getCategoria());
         holder.edad.setText(model.getEdad());
@@ -61,6 +80,30 @@ public class LibrosCatalogoAdapter extends FirestoreRecyclerAdapter<LibrosCatalo
         return new LibrosViewHolder(view);
     }
 
+    @Override
+    public long getItemId(int position) {
+        // Return a stable ID for each item
+        if (position < getSnapshots().size()) {
+            String documentId = getSnapshots().getSnapshot(position).getId();
+            return documentId.hashCode();
+        }
+        return RecyclerView.NO_ID;
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        // Called when the whole data set has changed
+        // You can add any UI updates here if needed
+    }
+
+
+    public void onError(@NonNull Exception e) {
+        super.onError((FirebaseFirestoreException) e);
+        // Handle errors here
+        e.printStackTrace();
+    }
+
     public class LibrosViewHolder extends RecyclerView.ViewHolder {
         TextView titulo, categoria, edad;
         ImageView imagen;
@@ -73,14 +116,22 @@ public class LibrosCatalogoAdapter extends FirestoreRecyclerAdapter<LibrosCatalo
             imagen = itemView.findViewById(R.id.ivPortada);
 
             itemView.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position = getBindingAdapterPosition(); // Use getBindingAdapterPosition instead
                 if (position != RecyclerView.NO_POSITION && listener != null) {
-                    LibrosCatalogoModelo libro = getSnapshots().getSnapshot(position).toObject(LibrosCatalogoModelo.class);
-                    if (libro != null) {
-                        listener.onLibroClick(libro);
+                    try {
+                        if (position < getSnapshots().size()) {
+                            LibrosCatalogoModelo libro = getSnapshots().getSnapshot(position).toObject(LibrosCatalogoModelo.class);
+                            if (libro != null) {
+                                listener.onLibroClick(libro);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             });
         }
+
     }
+
 }
